@@ -289,28 +289,9 @@ https://(アプリケーション名).herokuapp.com/ deployed to Heroku
 URLはHerokuによって自動的に生成されます。このURLがあなたのアプリケーションのURLとなります。
 試しにブラウザでアクセスしてみましょう。
 
-### 2023年10月12日以降に最終課題に入られた方はこちら
-
-2023年10月12日以降に最終課題に入られた方は、以下のような画面が表示されていればデプロイは完了ですので、「データベースの作成」セクションまで進んでください。
+以下のような画面が表示されていればデプロイは完了ですので、「データベースの作成」セクションまで進んでください。
 
 ![TOPページ](https://res.cloudinary.com/he3zvdcui/image/upload/v1696491413/Curriculums/final-task-2/first-view_cywe9c.png)
-
-### 2023年10月11日以前に最終課題に入られた方はこちら
-
-2023年10月11日以前に最終課題に入られた方は、以下のようなエラー画面が表示されていると思います。
-
-![heroku 500](../images/deploy/heroku_500.png)
-
-なぜエラーになっているのかを確認してみましょう。
-
-```sh
-$ heroku logs --source=app --tail
-...
-FATAL -- : [a5c760b6-7ccb-4009-9b26-b66de590879c] Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)):
-...
-```
-
-これは、データベース（MySQL）に接続できていないことが原因で発生しているエラーです。次の「データベースの作成」セクションでエラーを解消していきましょう。
 
 ## データベースの作成
 
@@ -349,30 +330,9 @@ $ git push heroku testbranch:master
 
 デプロイが完了したら、もう一度URLにアクセスしてみましょう。
 
-### 2023年10月12日以降に最終課題に入られた方はこちら
-
-2023年10月12日以降に最終課題に入られた方は、変わらず以下のような画面が表示されていると思います。こちらで特に問題はありませんので、「データベースの設定」セクションまで進んでください。
+変わらず以下のような画面が表示されていると思います。こちらで特に問題はありませんので、「データベースの設定」セクションまで進んでください。
 
 ![TOPページ](https://res.cloudinary.com/he3zvdcui/image/upload/v1696491413/Curriculums/final-task-2/first-view_cywe9c.png)
-
-### 2023年10月11日以前に最終課題に入られた方はこちら
-
-2023年10月11日以前に最終課題に入られた方は、依然として同じエラー画面が表示されていると思います。
-
-![heroku 500](../images/deploy/heroku_500.png)
-
-なぜエラーになっているのかを確認してみましょう。
-
-```sh
-$ heroku logs --source=app --tail
-...
-FATAL -- : [dc87c41d-991b-4104-832d-5be8179f7150] ActiveRecord::StatementInvalid (Mysql2::Error: Table 'bcylltkygs644e41.spree_stores' doesn't exist: SHOW FULL FIELDS FROM `spree_stores`):
-...
-```
-
-先ほどとはエラーメッセージが変わり、`spree_stores`というテーブルが存在していないようです。
-
-これはデータベースには正常に接続できているものの、Solidusが必要とするテーブルが作成されていないことを意味します。次の「データベースの設定」セクションでエラーを解消していきましょう。
 
 ## データベースの設定
 
@@ -403,17 +363,9 @@ $ heroku run bin/rails runner "['products', 'taxons', 'option_values', 'product_
 
 コマンドの実行が完了したら、アプリケーションのURLにアクセスしてみましょう。
 
-### 2023年10月12日以降に最終課題に入られた方はこちら
-
-2023年10月12日以降に最終課題に入られた方は、変わらず以下のような画面が表示されていると思います。こちらでHeroku上での設定は完了です。お疲れ様でした！
+変わらず以下のような画面が表示されていると思います。こちらでHeroku上での設定は完了です。お疲れ様でした！
 
 ![TOPページ](https://res.cloudinary.com/he3zvdcui/image/upload/v1696491413/Curriculums/final-task-2/first-view_cywe9c.png)
-
-### 2023年10月11日以前に最終課題に入られた方はこちら
-
-2023年10月11日以前に最終課題に入られた方は、無事以下のようなページが表示されていると思います。こちらでHeroku上での設定は完了です。お疲れ様でした！
-
-![Solidus initial view](../images/deploy/solidus_images_displayed.png)
 
 ### 補足
 
