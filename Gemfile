@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.7.3'
+ruby '~> 3.3.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.11'
 
 gem 'solidus', '~> 2.11.0'
 gem 'solidus_auth_devise'
-gem 'solidus_i18n', github: 'solidusio-contrib/solidus_i18n', branch: 'master'
+gem 'solidus_i18n'
 gem 'paypalhttp', '~> 1.0'
 gem 'solidus_auth_devise'
 gem 'solidus_paypal_commerce_platform'
