@@ -50,7 +50,7 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-   <<: *default
+  <<: *default
   database: potepanec_2_7_production
   username: potepanec
   password: <%= ENV['POTEPANEC_DATABASE_PASSWORD'] %>
