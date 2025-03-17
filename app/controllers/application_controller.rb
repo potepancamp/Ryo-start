@@ -25,5 +25,4 @@ class ApplicationController < ActionController::Base
     logger.error "Rendering 500 with exception: #{e.message}" if e
     render "errors/500.html", status: :internal_server_error, layout: "error"
   end
-  
 end

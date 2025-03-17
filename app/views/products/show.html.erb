@@ -2,13 +2,13 @@
   <div class="ProductWrapper">
     <div class="ProductSlider">
       <div class="carousel-inner">
-        <%  if @product.master&.images.any? %>
+        <% if @product.master&.images.any? %>
           <%= image_tag @product.master.images.first.attachment(:small), alt: @product.name, class: 'product-image' %>
         <% else %>
           <%= 'No image available' %>
         <% end %>
-      </div>  
-    </div>  
+      </div>
+    </div>
 
     <section class="ProductDetail">
       <h1 class="ProductDetail__name">
@@ -41,8 +41,8 @@
         <% if @product.master.price.present? %>
           <%= number_to_currency(@product.master.price) %>
         <% else %>
-          Not available  
-        <% end %>  
+          Not available
+        <% end %>
       </h3>
 
       <label class="SubTotalForItem__label" for="item-count">数量</label>
@@ -61,52 +61,46 @@
           <option value="10">10</option>
         </select>
       </div>
-      <a class="ProductDetail__add-button" href="/cart">カートに入れる</a>
-    </section>  
-  </div>  
 
-  
+      <a class="ProductDetail__add-button" href="/cart">カートに入れる</a>
+    </section>
+  </div>
 
   <section class="RelatedProducts">
-  <h3 class="RelatedProducts__title">一緒に見られている商品</h3>
+    <h3 class="RelatedProducts__title">一緒に見られている商品</h3>
 
-  <ul class="RelatedProducts__list">
-    <li class="RelatedProduct">
-  <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+    <ul class="RelatedProducts__list">
+      <li class="RelatedProduct">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+        <p class="RelatedProduct__name">
+          ヒートテックウォームウォームパデットリブブルゾン
+        </p>
+        <span class="RelatedProduct__price">¥ 5,999</span>
+      </li>
 
-  <p class="RelatedProduct__name">
-    ヒートテックウォームウォームパデットリブブルゾン
-  </p>
+      <li class="RelatedProduct">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+        <p class="RelatedProduct__name">
+          ヒートテックウォームウォームパデットリブブルゾン
+        </p>
+        <span class="RelatedProduct__price">¥ 5,999</span>
+      </li>
 
-  <span class="RelatedProduct__price">¥ 5,999</span>
-</li>
-    <li class="RelatedProduct">
-  <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+      <li class="RelatedProduct">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+        <p class="RelatedProduct__name">
+          ヒートテックウォームウォームパデットリブブルゾン
+        </p>
+        <span class="RelatedProduct__price">¥ 5,999</span>
+      </li>
 
-  <p class="RelatedProduct__name">
-    ヒートテックウォームウォームパデットリブブルゾン
-  </p>
-
-  <span class="RelatedProduct__price">¥ 5,999</span>
-</li>
-    <li class="RelatedProduct">
-  <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
-
-  <p class="RelatedProduct__name">
-    ヒートテックウォームウォームパデットリブブルゾン
-  </p>
-
-  <span class="RelatedProduct__price">¥ 5,999</span>
-</li>
-    <li class="RelatedProduct">
-  <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
-
-  <p class="RelatedProduct__name">
-    ヒートテックウォームウォームパデットリブブルゾン
-  </p>
-
-  <span class="RelatedProduct__price">¥ 5,999</span>
-</li>
-  </ul>
-</section>
-</div>    
+      <li class="RelatedProduct">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth-73e38cba6f78260794185319feaf449113d108dac320665f27775d73e23abc99.jpg">
+        <p class="RelatedProduct__name">
+          ヒートテックウォームウォームパデットリブブルゾン
+        </p>
+        <span class="RelatedProduct__price">¥ 5,999</span>
+      </li>
+    </ul>
+  </section>
+</div>

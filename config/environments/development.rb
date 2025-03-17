@@ -7,7 +7,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = true
+  config.eager_load = false
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -65,5 +65,4 @@ Rails.application.configure do
   # add white list ips under Docker
   # config.web_console.whitelisted_ips = '0.0.0.0/0'
   config.web_console.allowed_ips = '127.0.0.1'  # 新しい設定
-
 end
