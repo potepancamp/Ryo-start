@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
     render "errors/404.html", status: :not_found, layout: "error"
   end
 
-  def _render_500(e: nil)
+  def _render_500(e)
     logger.error "Rendering 500 with exception: #{e.message}" if e
-
     render "errors/500.html", status: :internal_server_error, layout: "error"
   end
+  
 end

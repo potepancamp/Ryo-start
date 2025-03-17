@@ -48,6 +48,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rails-erd'
   gem 'annotate'
+  gem 'faker'
 end
 
 group :development do
@@ -63,3 +64,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "aws-sdk-s3", '~> 1'
+
+gem 'base64'
+gem 'bigdecimal'
+gem 'mutex_m'
