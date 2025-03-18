@@ -57,7 +57,7 @@ group :development, :test do
   gem 'rails-erd'
   gem 'annotate'
   gem 'faker'
-  gem 'rubocop'
+  gem 'rubocop-airbnb'
 end
 
 group :development do
