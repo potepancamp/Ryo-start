@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rails-erd'
   gem 'annotate'
   gem 'faker'
+  gem 'rubocop'
 end
 
 group :development do
