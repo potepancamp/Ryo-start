@@ -5,11 +5,11 @@ inherit_from:
 Rails:
   Enabled: true
 
-# 文字数の上限を８０文字から変更
-LineLength:
-Max: 130
+# 文字数の上限を80文字から130文字に変更
+Layout/LineLength:
+  Max: 130
 
-#rubocopで検証したくないフォルダを指定
+# rubocopで検証したくないフォルダを指定
 AllCops:
   Exclude:
     - 'db/**/*'
@@ -20,4 +20,3 @@ AllCops:
     - '**/Gemfile'
     - 'vendor/**/*'
     - '.git/**/*'
-    
