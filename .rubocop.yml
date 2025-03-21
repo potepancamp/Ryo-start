@@ -1,5 +1,5 @@
 inherit_from:
-  - .rubocop_airbnb.yml
+  - .rubocop-airbnb.yml
 
 # Rails用に最適化
 Rails:
@@ -7,8 +7,9 @@ Rails:
 
 # 文字数の上限を８０文字から変更
 LineLength:
-  Max: 130  
+Max: 130
 
+#rubocopで検証したくないフォルダを指定
 AllCops:
   Exclude:
     - 'db/**/*'
@@ -19,3 +20,4 @@ AllCops:
     - '**/Gemfile'
     - 'vendor/**/*'
     - '.git/**/*'
+    
