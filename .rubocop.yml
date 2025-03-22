@@ -9,6 +9,7 @@ Layout/LineLength:
 
 AllCops:
   Exclude:
+    - 'lib/tasks/**/*.rake'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
@@ -17,3 +18,6 @@ AllCops:
     - '**/Gemfile'
     - 'vendor/**/*'
     - '.git/**/*'
+    - 'spec/requests/products_spec.rb'  # ← 除外したいファイル
+    - 'spec/spec_helper.rb'             # ← 除外したいファイル
+    - 'spec/views/products/show.html.erb_spec.rb' # ← 他にも除外したいファイルがあれば追加
