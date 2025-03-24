@@ -197,4 +197,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# ディレクトリ全体を無視
+app/assets/images/home/category/
+
 /storage/*
