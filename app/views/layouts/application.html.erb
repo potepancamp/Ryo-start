@@ -3,6 +3,7 @@
 <html>
   <head>
     <%= render 'layouts/head' %>
+    <title><%= @product.present? ? @product.name : "Your Store Name" %></title>
   </head>
 
   <body>

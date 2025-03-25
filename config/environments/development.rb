@@ -64,5 +64,5 @@ Rails.application.configure do
 
   # add white list ips under Docker
   # config.web_console.whitelisted_ips = '0.0.0.0/0'
-  config.web_console.allowed_ips = '127.0.0.1'  # 新しい設定
+  config.web_console.allowed_ips = '0.0.0.0/0'
 end
