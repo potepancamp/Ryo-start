@@ -1,11 +1,12 @@
+<% provide(:title, @product.name) %>
 <div class="Container ProductsContainer">
   <div class="ProductWrapper">
     <div class="ProductSlider">
       <div class="carousel-inner">
-        <% if @product.master&.images.any? %>
-          <%= image_tag @product.master.images.first.attachment(:small), alt: @product.name, class: 'product-image' %>
-        <% else %>
-          <%= 'No image available' %>
+        <% @product.images.each_with_index do |image, index| %>
+          <div class="item <%= 'active' if index == 0 %>">
+            <%= image_tag image.attachment(:small), alt: @product.name, class: 'product-image' %>
+          </div>
         <% end %>
       </div>
     </div>
