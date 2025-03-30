@@ -18,6 +18,3 @@ AllCops:
     - '**/Gemfile'
     - 'vendor/**/*'
     - '.git/**/*'
-    - 'spec/requests/**/*'
-    - 'spec/spec_helper.rb'
-    - 'spec/views/products/**/*'

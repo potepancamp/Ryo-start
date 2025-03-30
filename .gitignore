@@ -197,6 +197,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-app/assets/images/home/category
-
 /storage/*
