@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/head' %>
-    <title><%= @product.present? ? @product.name : "Your Store Name" %></title>
   </head>
-
+  
   <body>
     <%= render 'layouts/header' %>
-
+    
     <%= yield %>
-
+    
     <%= render 'layouts/footer' %>
-
+    
     <%= javascript_include_tag 'application' %>
   </body>
 </html>

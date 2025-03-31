@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Products Show Page", type: :request do
-  let!(:product) { create(:product) }
+  let(:product) { create(:product) }
   describe "GET /products/:id" do
     before do
       get product_path(product.id)

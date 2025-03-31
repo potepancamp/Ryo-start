@@ -31,11 +31,7 @@
         </div>
       </div>
       <h3 class="ProductDetail__price">
-        <% if @product.master.price.present? %>
-          <%= number_to_currency(@product.master.price) %>
-        <% else %>
-          Not available
-        <% end %>
+        <%= @product.display_price %>  
       </h3>
       <label class="SubTotalForItem__label" for="item-count">数量</label>
       <div class="SubTotalForItem__select ProductDetail__item-count">
@@ -59,22 +55,22 @@
     <h3 class="RelatedProducts__title">一緒に見られている商品</h3>
     <ul class="RelatedProducts__list">
       <li class="RelatedProduct">
-      <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
         <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
         <span class="RelatedProduct__price">¥ 5,999</span>
       </li>
       <li class="RelatedProduct">
-      <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
         <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
         <span class="RelatedProduct__price">¥ 5,999</span>
       </li>
       <li class="RelatedProduct">
-      <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
         <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
         <span class="RelatedProduct__price">¥ 5,999</span>
       </li>
       <li class="RelatedProduct">
-      <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
+        <img class="RelatedProduct__image" alt="服" src="/assets/home/category/cloth.jpg">
         <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
         <span class="RelatedProduct__price">¥ 5,999</span>
       </li>
