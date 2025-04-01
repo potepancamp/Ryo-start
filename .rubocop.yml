@@ -1,0 +1,20 @@
+inherit_from:
+  - .rubocop-airbnb.yml
+
+Rails:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 130
+
+AllCops:
+  Exclude:
+    - 'lib/tasks/**/*.rake'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'node_modules/**/*'
+    - 'bin/*'
+    - '**/Gemfile'
+    - 'vendor/**/*'
+    - '.git/**/*'

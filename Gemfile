@@ -9,23 +9,31 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1'
-# use bootsnap
+
+# Use bootsnap
 gem 'bootsnap', require: false
+
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5.3'
+
 # Use Puma as the app server
 gem 'puma', '~> 5.2.2'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 4.2.0'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.11'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -48,6 +56,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rails-erd'
   gem 'annotate'
+  gem 'rubocop-airbnb'
 end
 
 group :development do
@@ -62,4 +71,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem "aws-sdk-s3", '~> 1'
+gem 'aws-sdk-s3', '~> 1'
+gem 'base64'
+gem 'bigdecimal'
+gem 'mutex_m'
