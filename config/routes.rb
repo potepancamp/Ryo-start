@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :cart, only: :index, controller: 'cart'
+
+  get 'categories/:taxon_id', to: 'categories#show', as: 'category'
 end

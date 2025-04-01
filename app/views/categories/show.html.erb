@@ -1,0 +1,19 @@
+<%= breadcrumb :home %>
+<%= breadcrumb @taxon.name, category_path(@taxon) %>
+
+<h1><%= @taxon.name %>の商品一覧</h1>
+
+<% if @parent_taxons.any? %>
+  <div class="parent-categories">
+    <%= @parent_taxons.each do |parent_taxon| %>
+      <%= link_to parent_taxon.name, category_path(parent_taxon) %>
+    <% end %>
+  </div>
+<% end %>
+
+<% @products.each do |product| %>
+  <div class="product">
+    <%= link_to product.name, product_path(product) %>
+    <p><%= product.price.to_s %></p>
+  </div>
+<% end %>

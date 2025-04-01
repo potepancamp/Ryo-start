@@ -75,3 +75,5 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'base64'
 gem 'bigdecimal'
 gem 'mutex_m'
+
+gem 'breadcrumbs_on_rails'
