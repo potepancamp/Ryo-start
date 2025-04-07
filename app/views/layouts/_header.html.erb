@@ -7,10 +7,12 @@
         <% end %>
 
         <ul class="NavigationMenuList">
-          <li class="NavigationMenuList__item">服</li>
-          <li class="NavigationMenuList__item">帽子</li>
-          <li class="NavigationMenuList__item">バッグ</li>
-          <li class="NavigationMenuList__item">マグ</li>
+        <% items = { "服" => @clothing, "帽子" => @caps, "バッグ" => @bags, "マグ" => @mugs } %>
+        <% items.each do |name, item| %>
+          <li class="NavigationMenuList__item">
+            <%= link_to name, category_path(item.id), class: 'button' %>
+          </li>
+        <% end %>
         </ul>
       </div>
 

@@ -1,6 +1,15 @@
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
 
+  before_action :home_category_link
+
+  def home_category_link
+    @clothing = Spree::Taxon.find_by(name: "Clothing")
+    @caps = Spree::Taxon.find_by(name: "Caps")
+    @bags = Spree::Taxon.find_by(name: "Bags")
+    @mugs = Spree::Taxon.find_by(name: "Mugs")
+  end
+
   protect_from_forgery with: :exception
 
   unless Rails.env.development?
