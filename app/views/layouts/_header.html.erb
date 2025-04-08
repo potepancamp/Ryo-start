@@ -9,6 +9,7 @@
         <ul class="NavigationMenuList">
         <% items = { "服" => @clothing, "帽子" => @caps, "バッグ" => @bags, "マグ" => @mugs } %>
         <% items.each do |name, item| %>
+          <% next if item.nil? %> 
           <li class="NavigationMenuList__item">
             <%= link_to name, category_path(item.id), class: 'button' %>
           </li>
