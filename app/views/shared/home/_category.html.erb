@@ -3,53 +3,26 @@
     <h2 class="Category__title">CATEGORY</h2>
 
     <ul class="CategoryList">
-      <li class="CategoryItem">
-        <div class="CategoryItem__image-wrapper">
-          <%= image_tag("home/category/cloth.jpg", alt: "服カテゴリー") %>
+      <% categories = [
+        { id: 3, name: '服', image: 'home/category/cloth.jpg' },
+        { id: 4, name: '帽子', image: 'home/category/cap.jpg' },
+        { id: 5, name: 'バッグ', image: 'home/category/bag.jpg' },
+        { id: 6, name: 'マグ', image: 'home/category/tableware.jpg' }
+      ] %>
 
-          <div class="CategoryItem__masking">
-            <%= link_to "VIEW", category_path(3), class: "CategoryItem__button" %>
+      <% categories.each do |category| %>
+        <li class="CategoryItem">
+          <div class="CategoryItem__image-wrapper">
+            <%= image_tag(category[:image]) %>
+
+            <div class="CategoryItem__masking">
+              <%= link_to "VIEW", category_path(category[:id]), class: "CategoryItem__button" %>
+            </div>
           </div>
-        </div>
 
-        <h3 class="CategoryItem__name">服</h3>
-      </li>
-
-      <li class="CategoryItem">
-        <div class="CategoryItem__image-wrapper">
-          <%= image_tag("home/category/cap.jpg", alt: "帽子カテゴリー") %>
-
-          <div class="CategoryItem__masking">
-            <%= link_to "VIEW",category_path(4), class: "CategoryItem__button" %>
-          </div>
-        </div>
-
-        <h3 class="CategoryItem__name">帽子</h3>
-      </li>
-
-      <li class="CategoryItem">
-        <div class="CategoryItem__image-wrapper">
-          <%= image_tag("home/category/bag.jpg", alt: "バッグカテゴリー") %>
-
-          <div class="CategoryItem__masking">
-            <%= link_to "VIEW", category_path(5), class: "CategoryItem__button" %>
-          </div>
-        </div>
-
-        <h3 class="CategoryItem__name">バッグ</h3>
-      </li>
-
-      <li class="CategoryItem">
-        <div class="CategoryItem__image-wrapper">
-          <%= image_tag("home/category/tableware.jpg", alt: "マグカテゴリー") %>
-
-          <div class="CategoryItem__masking">
-            <%= link_to "VIEW", category_path(6), class: "CategoryItem__button" %>
-          </div>
-        </div>
-
-        <h3 class="CategoryItem__name">マグ</h3>
-      </li>
+          <h3 class="CategoryItem__name"><%= category[:name] %></h3>
+        </li>
+      <% end %>
     </ul>
   </div>
 </section>
