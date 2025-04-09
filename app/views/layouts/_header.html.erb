@@ -7,10 +7,9 @@
         <% end %>
 
         <ul class="NavigationMenuList">
-        <% items = { "服" => @clothing, "帽子" => @caps, "バッグ" => @bags, "マグ" => @mugs } %>
-        <% items.each do |name, item| %>
+        <% @categories.each do |key, category| %>
           <li class="NavigationMenuList__item">
-            <%= link_to name, category_path(item.id), class: 'button' %>
+            <%= link_to category.name, category_path(category.id), class: 'button' %>
           </li>
         <% end %>
         </ul>
@@ -33,7 +32,6 @@
                 class="NavigationSearchForm__input dropdown-menu"
                 placeholder="お探しですか？"
               >
-
               <div class="NavigationSearchForm__icon-wrapper">
                 <%= image_tag("icons/white-color-search.svg", class: "NavigationIconWrapper__icon NavigationSearchForm__icon") %>
               </div>
