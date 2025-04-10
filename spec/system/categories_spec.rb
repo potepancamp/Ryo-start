@@ -38,15 +38,20 @@ RSpec.describe "Products", type: :system do
     it "パンくずリストのリンクが機能すること" do
       within('.breadcrumb') do
         click_on 'ホーム'
-        expect(current_path).to eq root_path
-    
-        if ![1, 2].include?(taxon.id)
-          find('a', text: taxon.name).click
-          expect(current_path).to eq category_path(taxon.id)
-        else
-          expect(page).not_to have_link taxon.name
-        end
       end
-    end     
+    
+      expect(current_path).to eq root_path
+    
+      visit category_path(taxon.id)
+    
+      if ![1, 2].include?(taxon.id)
+        within('.breadcrumb') do
+          click_on taxon.name
+        end
+        expect(current_path).to eq category_path(taxon.id)
+      else
+        expect(page).not_to have_link taxon.name
+      end
+    end    
   end
 end
