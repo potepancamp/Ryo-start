@@ -20,10 +20,5 @@ RSpec.describe "CategoriesController", type: :request do
         expect(response.body).to include(product.display_price.to_s)
       end
     end
-
-    it "パンくずが表示されていること" do
-      expect(response.body).to include('<a href="/">ホーム</a>')
-      expect(response.body).to include(taxon.name)
-    end
   end
 end

@@ -1,3 +1,6 @@
+
+
+
 source 'https://rubygems.org'
 
 ruby '~> 3.3.3'
@@ -57,6 +60,9 @@ group :development, :test do
   gem 'rails-erd'
   gem 'annotate'
   gem 'rubocop-airbnb'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
 
 group :development do
