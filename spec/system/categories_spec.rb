@@ -18,7 +18,7 @@ RSpec.describe "Products", type: :system do
     it "パンくずリストが正しく表示されること" do
       within('.breadcrumb') do
         expect(page).to have_link 'ホーム', href: root_path
-        
+
         if ![1, 2].include?(taxon.id)
           expect(page).to have_link taxon.name, href: category_path(taxon.id)
         else
@@ -26,7 +26,7 @@ RSpec.describe "Products", type: :system do
         end
       end
     end
-    
+
     it "商品名が表示されること" do
       expect(page).to have_content product.name
     end
@@ -39,11 +39,10 @@ RSpec.describe "Products", type: :system do
       within('.breadcrumb') do
         click_on 'ホーム'
       end
-    
       expect(current_path).to eq root_path
-    
+
       visit category_path(taxon.id)
-    
+
       if ![1, 2].include?(taxon.id)
         within('.breadcrumb') do
           click_on taxon.name
@@ -52,6 +51,6 @@ RSpec.describe "Products", type: :system do
       else
         expect(page).not_to have_link taxon.name
       end
-    end    
+    end
   end
 end

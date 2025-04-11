@@ -21,7 +21,7 @@ RSpec.configure do |config|
       driven_by :selenium, using: :chrome, options: {
         browser: :remote,
         url: ENV.fetch("SELENIUM_DRIVER_URL"),
-        desired_capabilities: :chrome
+        desired_capabilities: :chrome,
       }
     else
       driven_by :selenium_chrome_headless
