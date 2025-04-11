@@ -23,6 +23,7 @@ RSpec.describe "Products Show Page", type: :request do
     end
 
     it "displays breadcrumbs with correct category names" do
+      expect(response.body).to include("ホーム")
       expect(response.body).to include(parent_taxon.name)
       expect(response.body).to include(child_taxon.name)
     end

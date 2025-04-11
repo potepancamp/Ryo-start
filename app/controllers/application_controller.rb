@@ -29,6 +29,6 @@ class ApplicationController < ActionController::Base
 
   def category_link
     category_names = %w(Clothing Caps Bags Mugs)
-    @categories = Spree::Taxon.where(name: category_names).index_by(&:name)
+    @categories = Spree::Taxon.where(name: category_names)
   end
 end

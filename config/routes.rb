@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   resources :cart, only: :index, controller: 'cart'
 
-  get 'categories/:taxon_id', to: 'categories#show', as: 'category'
+  resources :categories, only: [:show], param: :taxon_id
 end
