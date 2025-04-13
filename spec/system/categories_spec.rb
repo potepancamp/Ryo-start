@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Products", type: :system do
+RSpec.describe "Categories Show Page", type: :system do
   describe "カテゴリー詳細ページ" do
     let(:product) { create(:product) }
     let(:taxon) { create(:taxon, products: [product]) }

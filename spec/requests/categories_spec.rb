@@ -1,45 +1,48 @@
 require 'rails_helper'
+require 'nokogiri'
 
 RSpec.describe "CategoriesController", type: :request do
   describe "GET #show" do
-    context "通常のカテゴリ（id が 1, 2 以外）" do
-      let(:taxon) { create(:taxon, id: 3, name: "通常カテゴリ") }
-      let(:product) { create(:product, taxons: [taxon]) }
+    context "通常のカテゴリ（パンくずを表示する）" do
+      let(:taxon) { create(:taxon, name: "通常カテゴリ") }
 
-      before do
-        get category_path(taxon.id)
-      end
+      before { get category_path(taxon.id) }
 
       it "ステータスの確認" do
         expect(response).to have_http_status(200)
       end
 
-      it "商品名がレスポンスに含まれていること" do
-        expect(response.body).to include(taxon.name)
-        taxon.products.includes(variants: [:prices, { images: :attachment_blob }]).each do |product|
-          expect(response.body).to include(product.name)
-          expect(response.body).to include(product.display_price.to_s)
-        end
-      end
-
       it "パンくずにカテゴリ名が含まれる" do
-        expect(response.body).to include("ホーム")
-        expect(response.body).to include(taxon.name)
+        doc = Nokogiri::HTML(response.body)
+        breadcrumb_text = doc.css('ol.breadcrumb').text
+        expect(breadcrumb_text).to include("ホーム")
+        expect(breadcrumb_text).to include(taxon.name)
       end
     end
 
-    context "特殊カテゴリ（id が 1 または 2）" do
-      let(:taxon) { create(:taxon, id: 1, name: "特別カテゴリ") }
-      let!(:product) { create(:product, taxons: [taxon]) }
+    shared_examples "パンくずから省略される特殊カテゴリ" do |category_name|
+      let(:taxon) { create(:taxon, name: category_name) }
 
-      before do
-        get category_path(taxon.id)
+      before { get category_path(taxon.id) }
+
+      it "レスポンスが成功する" do
+        expect(response).to have_http_status(200)
       end
 
-      it "パンくずにカテゴリ名が含まれない" do
-        expect(response.body).to include("ホーム")
-        expect(response.body).not_to include(taxon.name)
+      it "#{category_name} はパンくずに含まれない" do
+        doc = Nokogiri::HTML(response.body)
+        breadcrumb_text = doc.css('ol.breadcrumb').text
+        expect(breadcrumb_text).to include("ホーム")
+        expect(breadcrumb_text).not_to include(taxon.name)
       end
+    end
+
+    context "特殊カテゴリ: Categories" do
+      it_behaves_like "パンくずから省略される特殊カテゴリ", "Categories"
+    end
+
+    context "特殊カテゴリ: Brand" do
+      it_behaves_like "パンくずから省略される特殊カテゴリ", "Brand"
     end
   end
 end

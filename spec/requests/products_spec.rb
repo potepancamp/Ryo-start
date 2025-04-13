@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Products Show Page", type: :request do
+RSpec.describe "ProductsController", type: :request do
   let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
   let(:child_taxon) { create(:taxon, name: "子カテゴリ", parent: parent_taxon) }
   let(:product) { create(:product, taxons: [child_taxon]) }
@@ -10,19 +10,19 @@ RSpec.describe "Products Show Page", type: :request do
       get product_path(product.id)
     end
 
-    it "returns a successful response" do
+    it "ステータスコードが200であること" do
       expect(response).to have_http_status(200)
     end
 
-    it "displays the product name" do
+    it "商品名が表示されること" do
       expect(response.body).to include(product.name)
     end
 
-    it "displays the product price" do
+    it "商品価格が表示されること" do
       expect(response.body).to include(product.price.to_s)
     end
 
-    it "displays breadcrumbs with correct category names" do
+    it "パンくずリストに正しいカテゴリ名が表示されること" do
       expect(response.body).to include("ホーム")
       expect(response.body).to include(parent_taxon.name)
       expect(response.body).to include(child_taxon.name)
