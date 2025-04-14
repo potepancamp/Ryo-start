@@ -18,12 +18,12 @@ RSpec.describe "Categories Show Page", type: :system do
     it "パンくずリストが正しく表示されること" do
       within('.breadcrumb') do
         expect(page).to have_link 'ホーム', href: root_path
+      end  
 
-        if ![1, 2].include?(taxon.id)
-          expect(page).to have_link taxon.name, href: category_path(taxon.id)
-        else
-          expect(page).not_to have_link taxon.name
-        end
+      within('.breadcrumb') do
+        expect(page).to have_link taxon.name, href: category_path(taxon.id)
+        expect(page).not_to have_link 'Categories'
+        expect(page).not_to have_link 'Brand'
       end
     end
 
@@ -36,20 +36,24 @@ RSpec.describe "Categories Show Page", type: :system do
     end
 
     it "パンくずリストのリンクが機能すること" do
+      visit category_path(taxon.id)
+    
       within('.breadcrumb') do
         click_on 'ホーム'
       end
       expect(current_path).to eq root_path
-
+    
+     
       visit category_path(taxon.id)
-
-      if ![1, 2].include?(taxon.id)
-        within('.breadcrumb') do
-          click_on taxon.name
-        end
-        expect(current_path).to eq category_path(taxon.id)
-      else
-        expect(page).not_to have_link taxon.name
+    
+      within('.breadcrumb') do
+        click_on taxon.name
+      end
+      expect(current_path).to eq category_path(taxon.id)
+    
+      within('.breadcrumb') do
+        expect(page).not_to have_link 'Categories'
+        expect(page).not_to have_link 'Brand'
       end
     end
   end
