@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def _render_404(e = nil)
+  def _render_404(e: nil)
     logger.info "Rendering 404 with exception: #{e.message}" if e
     render "errors/404.html", status: :not_found, layout: "error"
   end
