@@ -28,7 +28,8 @@ class ApplicationController < ActionController::Base
   end
 
   def category_link
-    category_names = %w(Clothing Caps Bags Mugs)
+    category_names = ["Clothing", "Caps", "Bags", "Mugs"]
     @categories = Spree::Taxon.where(name: category_names)
+    binding.pry 
   end
 end

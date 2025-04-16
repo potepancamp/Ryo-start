@@ -1,9 +1,10 @@
 require 'rails_helper'
 
+
 RSpec.describe "ProductsController", type: :request do
   let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
   let(:child_taxon) { create(:taxon, name: "子カテゴリ", parent: parent_taxon) }
-  let(:product) { create(:product, taxons: [child_taxon]) }
+  let(:product) { create(:product,name: "テスト商品", taxons: [child_taxon]) }
 
   describe "GET /products/:id" do
     before do
@@ -26,6 +27,7 @@ RSpec.describe "ProductsController", type: :request do
       expect(response.body).to include("ホーム")
       expect(response.body).to include(parent_taxon.name)
       expect(response.body).to include(child_taxon.name)
+      expect(response.body).to include(product.name)
     end
   end
 end
