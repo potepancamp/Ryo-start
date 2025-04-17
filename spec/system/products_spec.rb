@@ -2,18 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "Products Show Page", type: :system do
   describe "商品詳細ページ" do
-    # ここでカテゴリ（Taxon）をテスト前に作成
-    before do
-      ["Clothing", "Caps", "Bags", "Mugs"].each do |name|
-        FactoryBot.create(:taxon, name: name)
-      end
-    end
-
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:child_taxon)  { create(:taxon, name: "子カテゴリ", parent: parent_taxon) }
-    let(:product)      { create(:product, name: "テスト商品", taxons: [child_taxon]) }
+    let(:child_taxon) { create(:taxon, name: "子カテゴリ", parent: parent_taxon) }
+    let(:product) { create(:product, name: "テスト商品", taxons: [child_taxon]) }
+    let(:image) { create(:image) }
 
-    before { visit product_path(product.id) }
+    before do
+      product.images << image
+      visit product_path(product.id)
+    end
 
     it "ページタイトルが表示されること" do
       expect(page).to have_title "#{product.name} - BIGBAG Store"
