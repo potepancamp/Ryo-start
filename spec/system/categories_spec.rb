@@ -2,12 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "Categories Show Page", type: :system do
   describe "カテゴリー詳細ページ" do
-    let(:product) { create(:product) }
-    let(:taxon) { create(:taxon, products: [product]) }
+    let(:taxon) { create(:taxon) }
+    let(:other_taxon) { create(:taxon) }
+
+    let(:included_product) { create(:product, name: "カテゴリ内商品", taxons: [taxon]) }
+    let(:excluded_product) { create(:product, name: "カテゴリ外商品", taxons: [other_taxon]) }
+
     let(:image) { create(:image) }
 
     before do
-      product.images << image
+      included_product.images << image
       visit category_path(taxon.id)
     end
 
@@ -24,12 +28,16 @@ RSpec.describe "Categories Show Page", type: :system do
       end
     end
 
-    it "商品名が表示されること" do
-      expect(page).to have_content product.name
+    it "カテゴリに含まれる商品が表示されること" do
+      expect(page).to have_content included_product.name
     end
 
-    it "商品価格が表示されること" do
-      expect(page).to have_content product.display_price
+    it "カテゴリに含まれる商品価格が表示されること" do
+      expect(page).to have_content included_product.display_price
+    end
+
+    it "カテゴリに含まれない商品は表示されないこと" do
+      expect(page).not_to have_content excluded_product.name
     end
 
     it "パンくずリストのリンクが機能すること" do

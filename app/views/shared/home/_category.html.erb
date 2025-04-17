@@ -3,7 +3,7 @@
     <h2 class="Category__title">CATEGORY</h2>
 
     <ul class="CategoryList">
-      <% (@categories || categories).each do |category| %>
+      <% categories.each do |category| %>
         <li class="CategoryItem">
           <div class="CategoryItem__image-wrapper">
             <%= image_tag(category[:image]) %>

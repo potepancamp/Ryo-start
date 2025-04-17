@@ -11,26 +11,26 @@ RSpec.describe "CategoriesController", type: :request do
       get category_path(taxon.id)
     end
 
-    it "ステータスコードが200であること" do
+    it "レスポンスが200 OKであること" do
       expect(response).to have_http_status(:ok)
     end
 
-    it "ページタイトルが表示されること" do
+    it "レスポンスにページタイトルが含まれていること" do
       expect(response.body).to include("#{taxon.name} - BIGBAG Store")
     end
 
-    it "パンくずリストが正しく表示されること" do
+    it "レスポンスにパンくずリストが正しく含まれていること" do
       expect(response.body).to include("ホーム")
       expect(response.body).to include(taxon.name)
       expect(response.body).not_to include("Categories")
       expect(response.body).not_to include("Brand")
     end
 
-    it "商品名が表示されること" do
+    it "レスポンスに商品名が含まれていること" do
       expect(response.body).to include(product.name)
     end
 
-    it "商品価格が表示されること" do
+    it "レスポンスに商品価格が含まれていること" do
       expect(response.body).to include(product.display_price.to_s)
     end
   end
