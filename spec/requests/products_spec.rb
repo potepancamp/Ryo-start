@@ -19,7 +19,7 @@ RSpec.describe "ProductsController", type: :request do
     end
 
     it "レスポンスに商品価格が含まれていること" do
-      expect(response.body).to include(product.price.to_s)
+      expect(response.body).to include(product.display_price.to_s)
     end
 
     it "レスポンスにパンくずリストのカテゴリ名が含まれていること" do
