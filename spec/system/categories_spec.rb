@@ -41,8 +41,6 @@ RSpec.describe "Categories Show Page", type: :system do
     end
 
     it "パンくずリストのリンクが機能すること" do
-      visit category_path(taxon.id)
-
       within('.breadcrumb') do
         click_on 'ホーム'
       end
