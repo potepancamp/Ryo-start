@@ -6,8 +6,7 @@ RSpec.describe "Categories Show Page", type: :system do
     let(:other_taxon) { create(:taxon) }
 
     let(:included_product) { create(:product, name: "カテゴリ内商品", taxons: [taxon]) }
-    let(:excluded_product) { create(:product, name: "カテゴリ外商品", taxons: [other_taxon]) }
-
+    let!(:excluded_product) { create(:product, name: "カテゴリ外商品", taxons: [other_taxon]) }
     let(:image) { create(:image) }
 
     before do

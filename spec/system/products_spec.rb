@@ -51,13 +51,11 @@ RSpec.describe "Products Show Page", type: :system do
       end
 
       it "親カテゴリリンクが機能すること" do
-        visit product_path(product.id)
         within('.breadcrumb') { click_link parent_taxon.name }
         expect(current_path).to eq category_path(parent_taxon.id)
       end
 
       it "子カテゴリリンクが機能すること" do
-        visit product_path(product.id)
         within('.breadcrumb') { click_link child_taxon.name }
         expect(current_path).to eq category_path(child_taxon.id)
       end

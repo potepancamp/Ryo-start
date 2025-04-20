@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "CategoriesController", type: :request do
   describe "GET /categories/:id" do
-    let!(:product) { create(:product) }
-    let!(:taxon)   { create(:taxon, products: [product]) }
-    let!(:image)   { create(:image) }
+    let(:product) { create(:product) }
+    let(:taxon)   { create(:taxon, products: [product]) }
+    let(:image)   { create(:image) }
 
     before do
       product.images << image
