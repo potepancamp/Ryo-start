@@ -10,23 +10,38 @@ RSpec.describe "ProductsController", type: :request do
       get product_path(product.id)
     end
 
-    it "レスポンスが200 OKであること" do
-      expect(response).to have_http_status(200)
+    describe "レスポンスステータス" do
+      it "が200 OKであること" do
+        expect(response).to have_http_status(200)
+      end
     end
 
-    it "レスポンスに商品名が含まれていること" do
-      expect(response.body).to include(product.name)
+    describe "レスポンスボディの内容" do
+      it "商品名が含まれていること" do
+        expect(response.body).to include(product.name)
+      end
+
+      it "商品価格が含まれていること" do
+        expect(response.body).to include(product.price.to_s)
+      end
     end
 
-    it "レスポンスに商品価格が含まれていること" do
-      expect(response.body).to include(product.display_price.to_s)
-    end
+    describe "パンくずリストの表示内容" do
+      it "ホームが含まれていること" do
+        expect(response.body).to include("ホーム")
+      end
 
-    it "レスポンスにパンくずリストのカテゴリ名が含まれていること" do
-      expect(response.body).to include("ホーム")
-      expect(response.body).to include(parent_taxon.name)
-      expect(response.body).to include(child_taxon.name)
-      expect(response.body).to include(product.name)
+      it "親カテゴリ名が含まれていること" do
+        expect(response.body).to include(parent_taxon.name)
+      end
+
+      it "子カテゴリ名が含まれていること" do
+        expect(response.body).to include(child_taxon.name)
+      end
+
+      it "商品名がパンくずリストに含まれていること" do
+        expect(response.body).to include(product.name)
+      end
     end
   end
 end

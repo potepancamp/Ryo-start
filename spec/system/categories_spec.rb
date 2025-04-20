@@ -15,47 +15,64 @@ RSpec.describe "Categories Show Page", type: :system do
       visit category_path(taxon.id)
     end
 
-    it "ページタイトルが表示されること" do
-      expect(page).to have_title "#{taxon.name} - BIGBAG Store"
-    end
-
-    it "パンくずリストが正しく表示されること" do
-      within('.breadcrumb') do
-        expect(page).to have_link 'ホーム', href: root_path
-        expect(page).to have_link taxon.name, href: category_path(taxon.id)
-        expect(page).not_to have_link 'Categories'
-        expect(page).not_to have_link 'Brand'
+    describe "ページタイトル" do
+      it "が表示されること" do
+        expect(page).to have_title "#{taxon.name} - BIGBAG Store"
       end
     end
 
-    it "カテゴリに含まれる商品が表示されること" do
-      expect(page).to have_content included_product.name
-    end
-
-    it "カテゴリに含まれる商品価格が表示されること" do
-      expect(page).to have_content included_product.display_price
-    end
-
-    it "カテゴリに含まれない商品は表示されないこと" do
-      expect(page).not_to have_content excluded_product.name
-    end
-
-    it "パンくずリストのリンクが機能すること" do
-      within('.breadcrumb') do
-        click_on 'ホーム'
+    describe "パンくずリスト" do
+      it "ホームリンクが表示されること" do
+        within('.breadcrumb') do
+          expect(page).to have_link 'ホーム', href: root_path
+        end
       end
-      expect(current_path).to eq root_path
 
-      visit category_path(taxon.id)
-
-      within('.breadcrumb') do
-        click_on taxon.name
+      it "カテゴリ名のリンクが表示されること" do
+        within('.breadcrumb') do
+          expect(page).to have_link taxon.name, href: category_path(taxon.id)
+        end
       end
-      expect(current_path).to eq category_path(taxon.id)
 
-      within('.breadcrumb') do
-        expect(page).not_to have_link 'Categories'
-        expect(page).not_to have_link 'Brand'
+      it "Categoriesリンクは表示されないこと" do
+        within('.breadcrumb') do
+          expect(page).not_to have_link 'Categories'
+        end
+      end
+
+      it "Brandリンクは表示されないこと" do
+        within('.breadcrumb') do
+          expect(page).not_to have_link 'Brand'
+        end
+      end
+
+      it "ホームへのリンクが機能すること" do
+        within('.breadcrumb') do
+          click_on 'ホーム'
+        end
+        expect(current_path).to eq root_path
+      end
+
+      it "カテゴリ名へのリンクが機能すること" do
+        visit category_path(taxon.id)
+        within('.breadcrumb') do
+          click_on taxon.name
+        end
+        expect(current_path).to eq category_path(taxon.id)
+      end
+    end
+
+    describe "商品表示" do
+      it "カテゴリに含まれる商品が表示されること" do
+        expect(page).to have_content included_product.name
+      end
+
+      it "カテゴリに含まれる商品の価格が表示されること" do
+        expect(page).to have_content included_product.price
+      end
+
+      it "カテゴリに含まれない商品は表示されないこと" do
+        expect(page).not_to have_content excluded_product.name
       end
     end
   end

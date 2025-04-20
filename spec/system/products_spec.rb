@@ -12,38 +12,65 @@ RSpec.describe "Products Show Page", type: :system do
       visit product_path(product.id)
     end
 
-    it "ページタイトルが表示されること" do
-      expect(page).to have_title "#{product.name} - BIGBAG Store"
-    end
-
-    it "パンくずリストが正しく表示されること" do
-      within('.breadcrumb') do
-        expect(page).to have_link 'ホーム', href: root_path
-        expect(page).to have_link parent_taxon.name, href: category_path(parent_taxon.id)
-        expect(page).to have_link child_taxon.name, href: category_path(child_taxon.id)
-        expect(page).to have_content product.name
+    describe "ページタイトル" do
+      it "が表示されること" do
+        expect(page).to have_title "#{product.name} - BIGBAG Store"
       end
     end
 
-    it "商品名が表示されること" do
-      expect(page).to have_content product.name
+    describe "パンくずリストの表示" do
+      it "ホームリンクが表示されること" do
+        within('.breadcrumb') do
+          expect(page).to have_link 'ホーム', href: root_path
+        end
+      end
+
+      it "親カテゴリリンクが表示されること" do
+        within('.breadcrumb') do
+          expect(page).to have_link parent_taxon.name, href: category_path(parent_taxon.id)
+        end
+      end
+
+      it "子カテゴリリンクが表示されること" do
+        within('.breadcrumb') do
+          expect(page).to have_link child_taxon.name, href: category_path(child_taxon.id)
+        end
+      end
+
+      it "商品名がパンくずリストに表示されること（リンクではない）" do
+        within('.breadcrumb') do
+          expect(page).to have_content product.name
+        end
+      end
     end
 
-    it "商品価格が表示されること" do
-      expect(page).to have_content product.display_price
+    describe "パンくずリストのリンク機能" do
+      it "ホームリンクが機能すること" do
+        within('.breadcrumb') { click_link 'ホーム' }
+        expect(current_path).to eq root_path
+      end
+
+      it "親カテゴリリンクが機能すること" do
+        visit product_path(product.id)
+        within('.breadcrumb') { click_link parent_taxon.name }
+        expect(current_path).to eq category_path(parent_taxon.id)
+      end
+
+      it "子カテゴリリンクが機能すること" do
+        visit product_path(product.id)
+        within('.breadcrumb') { click_link child_taxon.name }
+        expect(current_path).to eq category_path(child_taxon.id)
+      end
     end
 
-    it "パンくずリストのリンクが機能すること" do
-      within('.breadcrumb') { click_link 'ホーム' }
-      expect(current_path).to eq root_path
+    describe "商品情報の表示" do
+      it "商品名が表示されること" do
+        expect(page).to have_content product.name
+      end
 
-      visit product_path(product.id)
-      within('.breadcrumb') { click_link parent_taxon.name }
-      expect(current_path).to eq category_path(parent_taxon.id)
-
-      visit product_path(product.id)
-      within('.breadcrumb') { click_link child_taxon.name }
-      expect(current_path).to eq category_path(child_taxon.id)
+      it "商品価格が表示されること" do
+        expect(page).to have_content product.price
+      end
     end
   end
 end

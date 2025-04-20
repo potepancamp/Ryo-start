@@ -1,11 +1,20 @@
 class ProductsController < ApplicationController
   def show
     @product = Spree::Product.find(params[:id])
+
+    # self_and_ancestors を使用して、タクソンとその親タクソンを取得
     @breadcrumbs = [
       { name: 'ホーム', path: root_path },
-      { name: @product.taxons.first.parent.name, path: category_path(@product.taxons.first.parent.id) },
-      { name: @product.taxons.first.name, path: category_path(@product.taxons.first.id) },
-      { name: @product.name },
     ]
+
+    @product.taxons.first.self_and_ancestors.each do |taxon|
+      # 'Categories' や 'Brand' を除外するためにフィルタリング
+      next if %w(Categories Brand).include?(taxon.name)
+
+      @breadcrumbs << { name: taxon.name, path: category_path(taxon.id) }
+    end
+
+    # 最後に商品名を追加
+    @breadcrumbs << { name: @product.name }
   end
 end
