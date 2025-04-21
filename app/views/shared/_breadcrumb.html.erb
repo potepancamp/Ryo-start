@@ -1,17 +1,17 @@
-<% breadcrumbs = [{ name: 'ホーム', path: root_path }] %>
-
-<% @ancestors.each do |t| %>
-  <% breadcrumbs << { name: t.name, path: category_path(t.id) } %>
-<% end %>
-
 <ol class="breadcrumb">
-  <% breadcrumbs.each do |crumb| %>
-    <li class="breadcrumb-item <%= crumb[:class] %>">
-      <% if crumb[:path] %>
-        <%= link_to crumb[:name], crumb[:path] %>
-      <% else %>
-        <span><%= crumb[:name] %></span>
-      <% end %>
+  <li class="breadcrumb-item">
+    <%= link_to 'ホーム', root_path %>
+  </li>
+
+  <% @ancestors.each do |ancestor| %>
+    <li class="breadcrumb-item">
+      <%= link_to ancestor.name, category_path(ancestor.id) %>
+    </li>
+  <% end %>
+
+  <% if defined?(@product) && @product.present? %>
+    <li class="breadcrumb-item active" aria-current="page">
+      <span><%= @product.name %></span>
     </li>
   <% end %>
 </ol>

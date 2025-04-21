@@ -57,6 +57,10 @@ group :development, :test do
   gem 'rails-erd'
   gem 'annotate'
   gem 'rubocop-airbnb'
+end
+
+# テスト環境専用
+group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
