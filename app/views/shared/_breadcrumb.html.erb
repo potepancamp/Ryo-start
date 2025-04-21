@@ -1,3 +1,9 @@
+<% breadcrumbs = [{ name: 'ホーム', path: root_path }] %>
+
+<% @ancestors.each do |t| %>
+  <% breadcrumbs << { name: t.name, path: category_path(t.id) } %>
+<% end %>
+
 <ol class="breadcrumb">
   <% breadcrumbs.each do |crumb| %>
     <li class="breadcrumb-item <%= crumb[:class] %>">
