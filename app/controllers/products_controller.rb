@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  include AncestorsHelper  # ヘルパーをインクルード
+  include AncestorsHelper
 
   def show
     @product = Spree::Product.find(params[:id])
