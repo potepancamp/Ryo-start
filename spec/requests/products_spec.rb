@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "ProductsController", type: :request do
-  include AncestorsHelper
+  include TaxonUtils
   shared_examples "共通レスポンスチェック" do
     it "200 OKであること" do
       expect(response).to have_http_status(200)

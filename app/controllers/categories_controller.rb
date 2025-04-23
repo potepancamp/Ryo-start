@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  include AncestorsHelper
+  include TaxonUtils
 
   def show
     @taxon = Spree::Taxon.find(params[:taxon_id])

@@ -35,7 +35,7 @@
       <label class="SubTotalForItem__label" for="item-count">数量</label>
       <div class="SubTotalForItem__select ProductDetail__item-count">
         <select name="item-count" id="item-count">
-          <% (1..10).each do |i| %>
+          <% @item_count_options.each do |i| %>
             <option value="<%= i %>"><%= i %></option>
           <% end %>
         </select>

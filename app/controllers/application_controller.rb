@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
+  include CategoryConstants
 
   protect_from_forgery with: :exception
 
@@ -28,7 +29,6 @@ class ApplicationController < ActionController::Base
   end
 
   def category_link
-    category_names = ["Clothing", "Caps", "Bags", "Mugs"]
-    @categories = Spree::Taxon.where(name: category_names)
+    @categories = Spree::Taxon.where(name: CATEGORY_NAMES)
   end
 end

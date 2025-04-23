@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Products Show Page", type: :system do
-  include AncestorsHelper
+  include TaxonUtils
   shared_examples "パンくずリストの表示内容（Systemテスト版）" do
     it "ホームリンクが表示されること" do
       within('.breadcrumb') do
