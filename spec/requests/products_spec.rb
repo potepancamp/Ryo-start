@@ -32,7 +32,6 @@ RSpec.describe "ProductsController", type: :request do
     end
   end
 
-  # -----------------------------------
   context "【3階層構成】親カテゴリ → 子カテゴリ → 商品名" do
     let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
     let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
@@ -45,7 +44,6 @@ RSpec.describe "ProductsController", type: :request do
     include_examples "パンくずリストの表示内容"
   end
 
-  # -----------------------------------
   context "【2階層構成】親カテゴリ → 商品名" do
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
     let(:taxon) { parent_taxon } # taxonにparent_taxonを代入（child_taxonなし）

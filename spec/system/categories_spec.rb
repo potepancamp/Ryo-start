@@ -37,12 +37,11 @@ RSpec.describe "CategoriesController", type: :system do
     end
   end
 
-  # ---------------------
   context "taxonが最上位親カテゴリではない場合" do
     let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
-    let(:taxon)        { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
-    let(:product)      { create(:product, name: "下位カテゴリ商品", taxons: [taxon]) }
-    let(:image)        { create(:image) }
+    let(:taxon) { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
+    let(:product) { create(:product, name: "下位カテゴリ商品", taxons: [taxon]) }
+    let(:image) { create(:image) }
 
     before do
       product.images << image
@@ -67,11 +66,10 @@ RSpec.describe "CategoriesController", type: :system do
     end
   end
 
-  # ---------------------
   context "taxonが最上位親カテゴリの場合" do
-    let(:taxon)   { create(:taxon, name: "最上位カテゴリ名", parent: nil) }
+    let(:taxon) { create(:taxon, name: "最上位カテゴリ名", parent: nil) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-    let(:image)   { create(:image) }
+    let(:image) { create(:image) }
 
     before do
       product.images << image

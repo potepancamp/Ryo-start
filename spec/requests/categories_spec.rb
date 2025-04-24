@@ -23,11 +23,10 @@ RSpec.describe "CategoriesController", type: :request do
     end
   end
 
-  # -----------------------------------
   context "taxonが最上位親カテゴリではない場合" do
     let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
-    let(:taxon)        { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
-    let(:product)      { create(:product, name: "下位カテゴリ商品", taxons: [taxon]) }
+    let(:taxon) { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
+    let(:product) { create(:product, name: "下位カテゴリ商品", taxons: [taxon]) }
     let(:image) { create(:image) }
 
     before do
@@ -37,15 +36,14 @@ RSpec.describe "CategoriesController", type: :request do
 
     include_examples "共通レスポンスチェック"
 
-    it "カテゴリ名がパンくずに表示されていること" do
-      breadcrumb = Nokogiri::HTML(response.body).css('.breadcrumb')
-      expect(breadcrumb.to_s).to include(taxon.name)
+    it "カテゴリ名がレスポンスに含まれていること（親カテゴリがある場合）" do
+      breadcrumb_html = response.body[/<!-- BEGIN breadcrumb -->(.*?)<!-- END breadcrumb -->/m, 1]
+      expect(breadcrumb_html).to include(taxon.name)
     end
   end
 
-  # -----------------------------------
   context "taxonが最上位親カテゴリの場合" do
-    let(:taxon)   { create(:taxon, name: "最上位カテゴリ", parent: nil) }
+    let(:taxon) { create(:taxon, name: "最上位カテゴリ", parent: nil) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
     let(:image) { create(:image) }
 
@@ -56,9 +54,9 @@ RSpec.describe "CategoriesController", type: :request do
 
     include_examples "共通レスポンスチェック"
 
-    it "カテゴリ名がパンくずリストに表示されないこと" do
-      breadcrumb = Nokogiri::HTML(response.body).css('.breadcrumb')
-      expect(breadcrumb.to_s).not_to include(taxon.name)
+    it "最上位カテゴリ名がレスポンスに含まれていないこと" do
+      breadcrumb_html = response.body[/<!-- BEGIN breadcrumb -->(.*?)<!-- END breadcrumb -->/m, 1]
+      expect(breadcrumb_html).not_to include(taxon.name)
     end
   end
 end
