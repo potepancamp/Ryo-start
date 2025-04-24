@@ -1,6 +1,6 @@
 <% provide(:title, @product.name) %>
 <div class="Container ProductsContainer">
-  <%= render 'shared/breadcrumb', breadcrumbs: @breadcrumbs %>
+  <%= render 'shared/breadcrumb', ancestors: @ancestors, product: @product %>
   <div class="ProductWrapper">
     <div class="ProductSlider">
       <div class="carousel-inner">

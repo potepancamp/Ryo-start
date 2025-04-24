@@ -3,15 +3,15 @@
     <%= link_to 'ホーム', root_path %>
   </li>
 
-  <% @ancestors.each do |ancestor| %>
+  <% ancestors.each do |ancestor| %>
     <li class="breadcrumb-item">
       <%= link_to ancestor.name, category_path(ancestor.id) %>
     </li>
   <% end %>
 
-  <% if defined?(@product) && @product.present? %>
+  <% if defined?(product) && product.present? %>
     <li class="breadcrumb-item active" aria-current="page">
-      <span><%= @product.name %></span>
+      <span><%= product.name %></span>
     </li>
   <% end %>
 </ol>

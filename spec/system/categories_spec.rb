@@ -30,6 +30,14 @@ RSpec.describe "CategoriesController", type: :system do
     end
   end
 
+  shared_examples "カテゴリに含まれない商品が表示されないこと" do
+    it "カテゴリに属していない商品が表示されないこと" do
+      unrelated_product = create(:product, name: "表示されてはいけない商品", taxons: [])
+      expect(page).not_to have_selector("[data-product-id='#{unrelated_product.id}']")
+    end
+  end
+
+  # ---------------------
   context "taxonが最上位親カテゴリではない場合" do
     let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
     let(:taxon)        { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
@@ -43,6 +51,7 @@ RSpec.describe "CategoriesController", type: :system do
 
     include_examples "商品情報の表示確認"
     include_examples "ホームリンクの表示/遷移確認"
+    include_examples "カテゴリに含まれない商品が表示されないこと"
 
     it "カテゴリ名のリンクが表示されること" do
       within('.breadcrumb') do
@@ -58,6 +67,7 @@ RSpec.describe "CategoriesController", type: :system do
     end
   end
 
+  # ---------------------
   context "taxonが最上位親カテゴリの場合" do
     let(:taxon)   { create(:taxon, name: "最上位カテゴリ名", parent: nil) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
@@ -70,6 +80,7 @@ RSpec.describe "CategoriesController", type: :system do
 
     include_examples "商品情報の表示確認"
     include_examples "ホームリンクの表示/遷移確認"
+    include_examples "カテゴリに含まれない商品が表示されないこと"
 
     it "カテゴリ名がパンくずリストに表示されないこと" do
       within('.breadcrumb') do
