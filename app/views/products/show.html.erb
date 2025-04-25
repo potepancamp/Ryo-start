@@ -3,7 +3,7 @@
   <ol class="breadcrumb">
     <%= render 'shared/breadcrumb', ancestors: @ancestors %>
       <li class="breadcrumb-item active" aria-current="page">
-        <span>/ <%= @product.name %></span>
+        <span style="color: black;">/ <%= @product.name %></span>
       </li>
   </ol>
   <div class="ProductWrapper">
@@ -40,8 +40,8 @@
       <label class="SubTotalForItem__label" for="item-count">数量</label>
       <div class="SubTotalForItem__select ProductDetail__item-count">
         <select name="item-count" id="item-count">
-           <% (1..10).each do |i| %>
-            <option value="<%= i %>"><%= i %></option>
+          <% (1..10).each do |qty| %>
+            <option><%= qty %></option>
           <% end %>
         </select>
       </div>

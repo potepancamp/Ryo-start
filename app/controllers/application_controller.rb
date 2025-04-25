@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
 
   CATEGORY_IMAGE_MAP = {
     'Clothing' => 'cloth.jpg',
-    'Caps'     => 'cap.jpg',
-    'Bags'     => 'bag.jpg',
-    'Mugs'     => 'tableware.jpg'
+    'Caps' => 'cap.jpg',
+    'Bags' => 'bag.jpg',
+    'Mugs' => 'tableware.jpg',
   }.freeze
 
   before_action :set_category_link

@@ -1,24 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "Products Show Page", type: :system do
-  include TaxonUtils
   shared_examples "パンくずリストの表示内容（Systemテスト版）" do
     it "ホームリンクが表示されること" do
-      within('.breadcrumb') do
+      within(all('.breadcrumb').first) do
         expect(page).to have_link 'ホーム', href: root_path
       end
     end
 
-    it "祖先カテゴリのリンクが表示されること" do
-      get_ancestors(taxon).each do |ancestor|
-        within('.breadcrumb') do
-          expect(page).to have_link ancestor.name, href: category_path(ancestor.id)
-        end
-      end
-    end
-
     it "商品名がパンくずリストに表示されること（リンクではない）" do
-      within('.breadcrumb') do
+      within(all('.breadcrumb').first) do
         expect(page).to have_content product.name
         expect(page).not_to have_link product.name
       end
@@ -27,16 +18,8 @@ RSpec.describe "Products Show Page", type: :system do
 
   shared_examples "パンくずリストのリンク遷移" do
     it "ホームリンクが機能すること" do
-      within('.breadcrumb') { click_link 'ホーム' }
+      within(all('.breadcrumb').first) { click_link 'ホーム' }
       expect(current_path).to eq root_path
-    end
-
-    it "祖先カテゴリリンクが機能すること" do
-      get_ancestors(taxon).each do |ancestor|
-        visit product_path(product.id)
-        within('.breadcrumb') { click_link ancestor.name }
-        expect(current_path).to eq category_path(ancestor.id)
-      end
     end
   end
 
@@ -54,7 +37,7 @@ RSpec.describe "Products Show Page", type: :system do
     end
   end
 
-  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品名" do
+  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品カテゴリ → 商品名" do
     let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
     let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
     let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }

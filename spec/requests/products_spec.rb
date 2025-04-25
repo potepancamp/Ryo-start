@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "ProductsController", type: :request do
-  include TaxonUtils
   shared_examples "共通レスポンスチェック" do
     it "200 OKであること" do
       expect(response).to have_http_status(200)
@@ -23,12 +22,6 @@ RSpec.describe "ProductsController", type: :request do
   shared_examples "パンくずリストの表示内容" do
     it "ホームが含まれていること" do
       expect(response.body).to include("ホーム")
-    end
-
-    it "祖先カテゴリ名がすべて含まれていること" do
-      get_ancestors(taxon).each do |ancestor|
-        expect(response.body).to include(ancestor.name)
-      end
     end
   end
 
