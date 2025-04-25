@@ -1,4 +1,3 @@
-<!-- BEGIN breadcrumb -->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <%= link_to 'ホーム', root_path %>
@@ -9,11 +8,4 @@
       <%= link_to ancestor.name, category_path(ancestor.id) %>
     </li>
   <% end %>
-
-  <% if defined?(product) && product.present? %>
-    <li class="breadcrumb-item active" aria-current="page">
-      <span><%= product.name %></span>
-    </li>
-  <% end %>
 </ol>
-<!-- END breadcrumb -->

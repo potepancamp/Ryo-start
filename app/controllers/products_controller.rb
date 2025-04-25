@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-  include TaxonUtils
-
   def show
     @product = Spree::Product.find(params[:id])
     @category = @product.taxons.first # 商品に関連するカテゴリを取得

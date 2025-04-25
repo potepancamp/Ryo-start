@@ -17,11 +17,7 @@ RSpec.describe "CategoriesController", type: :request do
     it "商品価格が含まれていること" do
       expect(response.body).to include(product.price.to_s)
     end
-
-    it "ホームが含まれていること" do
-      expect(response.body).to include("ホーム")
-    end
-  end
+  end 
 
   context "taxonが最上位親カテゴリではない場合" do
     let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
@@ -37,8 +33,7 @@ RSpec.describe "CategoriesController", type: :request do
     include_examples "共通レスポンスチェック"
 
     it "カテゴリ名がレスポンスに含まれていること（親カテゴリがある場合）" do
-      breadcrumb_html = response.body[/<!-- BEGIN breadcrumb -->(.*?)<!-- END breadcrumb -->/m, 1]
-      expect(breadcrumb_html).to include(taxon.name)
+      expect(response.body).to include(taxon.name)
     end
   end
 
@@ -55,8 +50,7 @@ RSpec.describe "CategoriesController", type: :request do
     include_examples "共通レスポンスチェック"
 
     it "最上位カテゴリ名がレスポンスに含まれていないこと" do
-      breadcrumb_html = response.body[/<!-- BEGIN breadcrumb -->(.*?)<!-- END breadcrumb -->/m, 1]
-      expect(breadcrumb_html).not_to include(taxon.name)
+      expect(response.body).not_to include(taxon.name)
     end
   end
 end

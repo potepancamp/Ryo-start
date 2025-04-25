@@ -1,6 +1,6 @@
 <% provide(:title, @taxon.name) %>
 <div class="categoris_container">
-   <%= render 'shared/breadcrumb', ancestors: @ancestors, product: @product %>
+   <%= render 'shared/breadcrumb', ancestors: @ancestors %>
   <h3 class="categoris_name"><%= @taxon.name %></h3>
   <ul class="categories_products">
     <% @products.each do |product| %>

@@ -1,6 +1,11 @@
 <% provide(:title, @product.name) %>
 <div class="Container ProductsContainer">
-  <%= render 'shared/breadcrumb', ancestors: @ancestors, product: @product %>
+  <ol class="breadcrumb">
+    <%= render 'shared/breadcrumb', ancestors: @ancestors %>
+      <li class="breadcrumb-item active" aria-current="page">
+        <span>/ <%= @product.name %></span>
+      </li>
+  </ol>
   <div class="ProductWrapper">
     <div class="ProductSlider">
       <div class="carousel-inner">
@@ -35,7 +40,7 @@
       <label class="SubTotalForItem__label" for="item-count">数量</label>
       <div class="SubTotalForItem__select ProductDetail__item-count">
         <select name="item-count" id="item-count">
-          <% @item_count_options.each do |i| %>
+           <% (1..10).each do |i| %>
             <option value="<%= i %>"><%= i %></option>
           <% end %>
         </select>
