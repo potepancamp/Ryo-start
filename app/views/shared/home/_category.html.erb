@@ -3,8 +3,8 @@
     <h2 class="Category__title">CATEGORY</h2>
 
     <ul class="CategoryList">
-      <% @categories.each do |category| %>
-        <% image_path = "home/category/#{@category_image_map[category.name]}" %>
+      <% categories.each do |category| %>
+        <% image_path = "home/category/#{category_image_map[category.name]}" %>
         <li class="CategoryItem">
           <div class="CategoryItem__image-wrapper">
             <%= image_tag(image_path, alt: category.name) %>

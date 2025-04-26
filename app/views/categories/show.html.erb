@@ -4,7 +4,7 @@
   <h3 class="categoris_name"><%= @taxon.name %></h3>
   <ul class="categories_products">
     <% @products.each do |product| %>
-      <li class="categoris_product" data-product-id="<%= product.id %>">
+      <li class="categoris_product">
         <%= link_to product_path(product.id), style: "text-decoration: none;" do %>
           <%= image_tag(product.master.images.first.attachment(:small), class: "categories_product_images") %>
           <p class="categoris_product_name"><%= product.name %></p>

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "CategoriesController", type: :system do
+  let(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
+  let(:unrelated_product) { create(:product, name: "表示されてはいけない商品", taxons: [unrelated_taxon]) }
+
   shared_examples "商品情報の表示確認" do
     it "ページタイトルが表示されること" do
       expect(page).to have_title "#{taxon.name} - BIGBAG Store"
@@ -32,8 +35,7 @@ RSpec.describe "CategoriesController", type: :system do
 
   shared_examples "カテゴリに含まれない商品が表示されないこと" do
     it "カテゴリに属していない商品が表示されないこと" do
-      unrelated_product = create(:product, name: "表示されてはいけない商品", taxons: [])
-      expect(page).not_to have_selector("[data-product-id='#{unrelated_product.id}']")
+      expect(page).not_to have_content(unrelated_product.name)
     end
   end
 
