@@ -39,7 +39,7 @@ RSpec.describe "ProductsController", type: :request do
 
   context "【2階層構成】親カテゴリ → 商品名" do
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:taxon) { parent_taxon } # taxonにparent_taxonを代入（child_taxonなし）
+    let(:taxon) { parent_taxon }
     let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
 
     before { get product_path(product.id) }

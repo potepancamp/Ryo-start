@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_ancestors(taxon)
-    # 自身を含む先祖を取得し、最上位カテゴリ（parent_idがnil）を除外、階層順に並び替え
     taxon.self_and_ancestors.where.not(parent_id: nil).order(:lft)
   end
 
