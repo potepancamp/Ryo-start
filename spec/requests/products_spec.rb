@@ -25,13 +25,18 @@ RSpec.describe "ProductsController", type: :request do
     end
   end
 
-  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品名" do
-    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
+  shared_context "商品とカテゴリの共通セットアップ" do |parent_taxon|
     let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }
     let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
 
     before { get product_path(product.id) }
+  end
+
+  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品名" do
+    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
+    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
+
+    include_context "商品とカテゴリの共通セットアップ"
 
     include_examples "共通レスポンスチェック"
     include_examples "パンくずリストの表示内容"
@@ -39,10 +44,8 @@ RSpec.describe "ProductsController", type: :request do
 
   context "【2階層構成】親カテゴリ → 商品名" do
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:taxon) { parent_taxon }
-    let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
 
-    before { get product_path(product.id) }
+    include_context "商品とカテゴリの共通セットアップ"
 
     include_examples "共通レスポンスチェック"
     include_examples "パンくずリストの表示内容"

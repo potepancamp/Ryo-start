@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "CategoriesController", type: :system do
-  let(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
-  let(:unrelated_product) { create(:product, name: "表示されてはいけない商品", taxons: [unrelated_taxon]) }
+  let!(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
+  let!(:unrelated_product) { create(:product, name: "表示されてはいけない商品", taxons: [unrelated_taxon]) }
 
   shared_examples "商品情報の表示確認" do
     it "ページタイトルが表示されること" do
@@ -39,16 +39,21 @@ RSpec.describe "CategoriesController", type: :system do
     end
   end
 
-  context "taxonが最上位親カテゴリではない場合" do
-    let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
+  shared_context "商品とカテゴリの共通セットアップ" do
     let(:taxon) { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
-    let(:product) { create(:product, name: "下位カテゴリ商品", taxons: [taxon]) }
+    let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
     let(:image) { create(:image) }
 
     before do
       product.images << image
       visit category_path(taxon.id)
     end
+  end
+
+  context "taxonが最上位親カテゴリではない場合" do
+    let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ") }
+
+    include_context "商品とカテゴリの共通セットアップ"
 
     include_examples "商品情報の表示確認"
     include_examples "ホームリンクの表示/遷移確認"
@@ -69,14 +74,8 @@ RSpec.describe "CategoriesController", type: :system do
   end
 
   context "taxonが最上位親カテゴリの場合" do
-    let(:taxon) { create(:taxon, name: "最上位カテゴリ名", parent: nil) }
-    let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-    let(:image) { create(:image) }
-
-    before do
-      product.images << image
-      visit category_path(taxon.id)
-    end
+    let(:parent_taxon) { nil }
+    include_context "商品とカテゴリの共通セットアップ"
 
     include_examples "商品情報の表示確認"
     include_examples "ホームリンクの表示/遷移確認"

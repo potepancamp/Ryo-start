@@ -7,11 +7,11 @@
         <% end %>
 
         <ul class="NavigationMenuList">
-        <% categories.each do |category| %>
-          <li class="NavigationMenuList__item">
-            <%= link_to category.name, category_path(category.id), class: 'button' %>
-          </li>
-        <% end %>
+          <% categories.each do |category| %>
+            <li class="NavigationMenuList__item">
+              <%= link_to category.name, category_path(category.id), class: 'button' %>
+            </li>
+          <% end %>
         </ul>
       </div>
 

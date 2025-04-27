@@ -37,17 +37,23 @@ RSpec.describe "Products Show Page", type: :system do
     end
   end
 
-  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品カテゴリ → 商品名" do
-    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
-    let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }
-    let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
+  shared_context "商品ページの共通セットアップ" do
     let(:image) { create(:image) }
+    let(:product) { create(:product, name: "商品名", taxons: taxons) }
 
     before do
       product.images << image
       visit product_path(product.id)
     end
+  end
+
+  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品カテゴリ → 商品名" do
+    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
+    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
+    let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }
+    let(:taxons) { [taxon] }
+
+    include_context "商品ページの共通セットアップ"
 
     include_examples "パンくずリストの表示内容（Systemテスト版）"
     include_examples "パンくずリストのリンク遷移"
@@ -57,13 +63,9 @@ RSpec.describe "Products Show Page", type: :system do
   context "【2階層構成】親カテゴリ → 商品名" do
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
     let(:taxon) { parent_taxon }
-    let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
-    let(:image) { create(:image) }
+    let(:taxons) { [taxon] }
 
-    before do
-      product.images << image
-      visit product_path(product.id)
-    end
+    include_context "商品ページの共通セットアップ"
 
     include_examples "パンくずリストの表示内容（Systemテスト版）"
     include_examples "パンくずリストのリンク遷移"
