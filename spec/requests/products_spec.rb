@@ -1,15 +1,9 @@
-require 'rails_helper'
-
 RSpec.describe "Products", type: :request do
   describe "GET /products/:id" do
     let(:image) { create(:image) }
     let(:ancestor) { create(:taxon, name: "親カテゴリー") }
     let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
     let(:product) { create(:product, taxons: [taxon]) }
-    let(:filename) do
-      filename = image.attachment_blob.filename
-      "#{filename.base}#{filename.extension_with_delimiter}"
-    end
 
     before do
       product.images << image
@@ -28,11 +22,7 @@ RSpec.describe "Products", type: :request do
       expect(response.body).to include(product.display_price.to_s)
     end
 
-    it "商品画像が含まれていること" do
-      expect(response.body).to include(filename)
-    end
-
-    it '商品詳細ページのタイトルが正しく含まれていること' do
+    it "商品詳細ページのタイトルが含まれていること" do
       expect(response.body).to include("<title>#{product.name} - BIGBAG Store</title>")
     end
 

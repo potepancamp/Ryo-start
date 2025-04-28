@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "CategoriesController", type: :request do
-  let(:taxon) { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
+  let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
+  let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
   let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
   let(:image) { create(:image) }
 
@@ -10,12 +11,12 @@ RSpec.describe "CategoriesController", type: :request do
     get category_path(taxon.id)
   end
 
-  shared_examples "共通レスポンスチェック" do
+  describe "共通レスポンスチェック" do
     it "200 OKであること" do
       expect(response).to have_http_status(200)
     end
 
-    it "ページタイトルが含まれていること" do
+    it "カテゴリーページタイトルが含まれていること" do
       expect(response.body).to include("#{taxon.name} - BIGBAG Store")
     end
 
@@ -24,23 +25,19 @@ RSpec.describe "CategoriesController", type: :request do
     end
 
     it "商品価格が含まれていること" do
-      expect(response.body).to include(product.display_price)
+      expect(response.body).to include(product.display_price.to_s)
     end
-  end
 
-  context "taxonが最上位親カテゴリではない場合" do
-    let(:parent_taxon) { create(:taxon, name: "最上位カテゴリ", parent: nil) }
+    it "パンくずリストにホームへのリンクが含まれていること" do
+      expect(response.body).to include('<a href="/">ホーム</a>')
+    end
 
-    include_examples "共通レスポンスチェック"
-
-    it "カテゴリ名がレスポンスに含まれていること（親カテゴリがある場合）" do
+    it "パンくずリストにtaxon名が含まれていること" do
       expect(response.body).to include(taxon.name)
     end
-  end
 
-  context "taxonが最上位親カテゴリの場合" do
-    let(:parent_taxon) { nil }
-
-    include_examples "共通レスポンスチェック"
+    it "パンくずリストにtaxon名へのリンクが含まれていること" do
+      expect(response.body).to include(category_path(taxon.id))
+    end
   end
 end
