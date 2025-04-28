@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "Products", type: :system do
+RSpec.describe "Productsのsystem spec", type: :system do
   describe "GET /show" do
     let(:root_taxon) { create(:taxon, name: 'ルートカテゴリー') }
     let(:parent_taxon) { create(:taxon, parent: root_taxon, name: '親カテゴリー') }
-    let(:taxon) { create(:taxon, parent: parent_taxon, name: 'カテゴリー') }
-    let(:product) { create(:product, taxons: [taxon], name: '商品名') }
+    let(:taxon) { create(:taxon, parent: parent_taxon, name: 'テストカテゴリー') }
+    let(:product) { create(:product, taxons: [taxon], name: '商品カテゴリ') }
     let!(:image) { create(:image) }
 
     before do
@@ -13,16 +13,16 @@ RSpec.describe "Products", type: :system do
       visit product_path(product.id)
     end
 
-    it "商品詳細ページの商品名が表示されること" do
+    it "商品カテゴリのページタイトルが表示されること" do
+      expect(page).to have_title "#{product.name} - BIGBAG Store"
+    end
+
+    it "商品カテゴリの商品名が表示されること" do
       expect(page).to have_content(product.name)
     end
 
-    it "商品の価格が表示されること" do
+    it "商品価格が表示されること" do
       expect(page).to have_content(product.display_price.to_s)
-    end
-
-    it "商品詳細ページのページタイトルが表示されること" do
-      expect(page).to have_title "#{product.name} - BIGBAG Store"
     end
 
     it "パンくずリストにホームリンクが表示されること" do
@@ -31,17 +31,11 @@ RSpec.describe "Products", type: :system do
       end
     end
 
-    it "ホームへのリンクが機能すること" do
+    it "パンくずリストにホームへのリンクが機能すること" do
       within(all('.breadcrumb').first) do
         click_on 'ホーム'
       end
       expect(current_path).to eq root_path
-    end
-
-    it "現在のページの商品名がパンくずリストに表示されること" do
-      within(all('.breadcrumb').first) do
-        expect(page).to have_content(product.name)
-      end
     end
 
     it "パンくずリストに親カテゴリのリンクが表示されること" do
@@ -52,7 +46,7 @@ RSpec.describe "Products", type: :system do
       expect(page).to have_current_path(category_path(taxon_id: parent_taxon.id))
     end
 
-    it "パンくずリストに子カテゴリのリンクが表示されること" do
+    it "パンくずリストにテストカテゴリーのリンクが表示されること" do
       within(all('.breadcrumb').first) do
         expect(page).to have_link(taxon.name, href: category_path(taxon_id: taxon.id))
         click_on taxon.name
@@ -60,7 +54,13 @@ RSpec.describe "Products", type: :system do
       expect(page).to have_current_path(category_path(taxon_id: taxon.id))
     end
 
-    it "パンくずリストにroot_taxonが表示されないこと" do
+    it "現在のページの商品カテゴリがパンくずリストに表示されること" do
+      within(all('.breadcrumb').first) do
+        expect(page).to have_content(product.name)
+      end
+    end
+
+    it "パンくずリストにルートカテゴリーが表示されないこと" do
       within(all('.breadcrumb').first) do
         expect(page).not_to have_content(root_taxon.name)
       end
