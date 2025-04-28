@@ -14,7 +14,7 @@ RSpec.describe "CategoriesController", type: :system do
     end
 
     it "商品価格が表示されていること" do
-      expect(page).to have_content product.price.to_s
+      expect(page).to have_content product.display_price
     end
   end
 

@@ -1,53 +1,51 @@
 require 'rails_helper'
 
-RSpec.describe "ProductsController", type: :request do
-  shared_examples "共通レスポンスチェック" do
+RSpec.describe "Products", type: :request do
+  describe "GET /products/:id" do
+    let(:image) { create(:image) }
+    let(:ancestor) { create(:taxon, name: "親カテゴリー") }
+    let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
+    let(:product) { create(:product, taxons: [taxon]) }
+    let(:filename) do
+      filename = image.attachment_blob.filename
+      "#{filename.base}#{filename.extension_with_delimiter}"
+    end
+
+    before do
+      product.images << image
+      get product_path(product.id)
+    end
+
     it "200 OKであること" do
       expect(response).to have_http_status(200)
     end
 
-    it "ページタイトルが含まれていること" do
-      expect(response.body).to include("#{product.name} - BIGBAG Store")
-    end
-
-    it "商品名が含まれていること" do
+    it "商品名が取得できること" do
       expect(response.body).to include(product.name)
     end
 
-    it "商品価格が含まれていること" do
-      expect(response.body).to include(product.price.to_s)
+    it "商品価格が取得できること" do
+      expect(response.body).to include(product.display_price.to_s)
     end
-  end
 
-  shared_examples "パンくずリストの表示内容" do
-    it "ホームが含まれていること" do
-      expect(response.body).to include("ホーム")
+    it "商品画像が含まれていること" do
+      expect(response.body).to include(filename)
     end
-  end
 
-  shared_context "商品とカテゴリの共通セットアップ" do |parent_taxon|
-    let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }
-    let(:product) { create(:product, name: "商品名", taxons: [taxon]) }
+    it '商品詳細ページのタイトルが正しく含まれていること' do
+      expect(response.body).to include("<title>#{product.name} - BIGBAG Store</title>")
+    end
 
-    before { get product_path(product.id) }
-  end
+    it "パンくずリストに現在のカテゴリーが含まれていること" do
+      expect(response.body).to include(taxon.name)
+    end
 
-  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品名" do
-    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
+    it "パンくずリストに現在のカテゴリーへのリンクが含まれていること" do
+      expect(response.body).to include(category_path(taxon.id))
+    end
 
-    include_context "商品とカテゴリの共通セットアップ"
-
-    include_examples "共通レスポンスチェック"
-    include_examples "パンくずリストの表示内容"
-  end
-
-  context "【2階層構成】親カテゴリ → 商品名" do
-    let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-
-    include_context "商品とカテゴリの共通セットアップ"
-
-    include_examples "共通レスポンスチェック"
-    include_examples "パンくずリストの表示内容"
+    it "パンくずリストに商品名が含まれていること" do
+      expect(response.body).to include(product.name)
+    end
   end
 end

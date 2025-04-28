@@ -1,74 +1,61 @@
 require 'rails_helper'
 
-RSpec.describe "Products Show Page", type: :system do
-  shared_examples "パンくずリストの表示内容（Systemテスト版）" do
-    it "ホームリンクが表示されること" do
-      within(all('.breadcrumb').first) do
-        expect(page).to have_link 'ホーム', href: root_path
-      end
-    end
-
-    it "商品名がパンくずリストに表示されること（リンクではない）" do
-      within(all('.breadcrumb').first) do
-        expect(page).to have_content product.name
-        expect(page).not_to have_link product.name
-      end
-    end
-  end
-
-  shared_examples "パンくずリストのリンク遷移" do
-    it "ホームリンクが機能すること" do
-      within(all('.breadcrumb').first) { click_link 'ホーム' }
-      expect(current_path).to eq root_path
-    end
-  end
-
-  shared_examples "商品情報の表示確認" do
-    it "ページタイトルが表示されること" do
-      expect(page).to have_title "#{product.name} - BIGBAG Store"
-    end
-
-    it "商品名が表示されること" do
-      expect(page).to have_content product.name
-    end
-
-    it "商品価格が表示されること" do
-      expect(page).to have_content product.price.to_s
-    end
-  end
-
-  shared_context "商品ページの共通セットアップ" do
-    let(:image) { create(:image) }
-    let(:product) { create(:product, name: "商品名", taxons: taxons) }
+RSpec.describe "Products", type: :system do
+  describe "GET /show" do
+    let(:root_taxon) { create(:taxon, name: 'Root Taxon') }
+    let(:parent_taxon) { create(:taxon, parent: root_taxon, name: 'Parent Taxon') }
+    let(:child_taxon) { create(:taxon, parent: parent_taxon, name: 'Child Taxon') }
+    let(:product) { create(:product, taxons: [child_taxon], name: 'Product') }
+    let!(:image) { create(:image) }
 
     before do
       product.images << image
       visit product_path(product.id)
     end
-  end
 
-  context "【3階層構成】親カテゴリ → 子カテゴリ → 商品カテゴリ → 商品名" do
-    let(:grandparent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:parent_taxon) { create(:taxon, name: "子カテゴリ", parent: grandparent_taxon) }
-    let(:taxon) { create(:taxon, name: "商品カテゴリ", parent: parent_taxon) }
-    let(:taxons) { [taxon] }
+    it "パンくずリストにホームリンクが含まれること" do
+      within(all('.breadcrumb').first) do
+        expect(page).to have_link('ホーム', href: root_path)
+        click_on 'ホーム'
+      end
+      expect(page).to have_current_path(root_path)
+    end
 
-    include_context "商品ページの共通セットアップ"
+    it "現在のページの商品名がパンくずリストに含まれること" do
+      within(all('.breadcrumb').first) do
+        expect(page).to have_content(product.name)
+      end
+    end
 
-    include_examples "パンくずリストの表示内容（Systemテスト版）"
-    include_examples "パンくずリストのリンク遷移"
-    include_examples "商品情報の表示確認"
-  end
+    it "パンくずリストに親カテゴリのリンクが含まれること" do
+      within(all('.breadcrumb').first) do
+        expect(page).to have_link(parent_taxon.name, href: category_path(taxon_id: parent_taxon.id))
+        click_on parent_taxon.name
+      end
+      expect(page).to have_current_path(category_path(taxon_id: parent_taxon.id))
+    end
+    
+    it "パンくずリストに子カテゴリのリンクが含まれること" do
+      within(all('.breadcrumb').first) do
+        expect(page).to have_link(child_taxon.name, href: category_path(taxon_id: child_taxon.id))
+        click_on child_taxon.name
+      end
+      expect(page).to have_current_path(category_path(taxon_id: child_taxon.id))
+    end
+    
 
-  context "【2階層構成】親カテゴリ → 商品名" do
-    let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:taxon) { parent_taxon }
-    let(:taxons) { [taxon] }
+    it "パンくずリストにroot_taxonが表示されないこと" do
+      within(all('.breadcrumb').first) do
+        expect(page).not_to have_content(root_taxon.name)
+      end
+    end
 
-    include_context "商品ページの共通セットアップ"
+    it "商品詳細ページの商品名が表示されること" do
+      expect(page).to have_content(product.name)
+    end
 
-    include_examples "パンくずリストの表示内容（Systemテスト版）"
-    include_examples "パンくずリストのリンク遷移"
-    include_examples "商品情報の表示確認"
+    it "商品の価格が表示されること" do
+      expect(page).to have_content(product.display_price.to_s)
+    end
   end
 end
