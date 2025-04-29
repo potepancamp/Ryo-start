@@ -6,7 +6,7 @@ RSpec.describe "Productsのsystem spec", type: :system do
     let(:parent_taxon) { create(:taxon, parent: root_taxon, name: '親カテゴリー') }
     let(:taxon) { create(:taxon, parent: parent_taxon, name: 'テストカテゴリー') }
     let(:product) { create(:product, taxons: [taxon], name: '商品カテゴリ') }
-    let!(:image) { create(:image) }
+    let(:image) { create(:image) }
 
     before do
       product.images << image

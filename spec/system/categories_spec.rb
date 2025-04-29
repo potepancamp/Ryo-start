@@ -7,7 +7,7 @@ RSpec.describe "Categoriesのsystem spec", type: :system do
   describe "GET /show" do
     let(:product) { create(:product, name: "商品カテゴリ", taxons: [taxon]) }
     let(:image) { create(:image) }
-    let!(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
+    let(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
     let!(:unrelated_product) { create(:product, name: "表示されてはいけない商品", taxons: [unrelated_taxon]) }
 
     before do
