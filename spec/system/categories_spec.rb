@@ -62,10 +62,6 @@ RSpec.describe "Categoriesのsystem spec", type: :system do
     context "テストカテゴリーに親カテゴリがない場合" do
       let(:taxon) { create(:taxon, name: "最上位カテゴリ", parent: nil) }
 
-      before do
-        visit category_path(taxon.id)
-      end
-
       it "最上位カテゴリがパンくずリストに表示されないこと" do
         within('.breadcrumb') do
           expect(page).to have_no_content(taxon.name)
