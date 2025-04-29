@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Categoriesのsystem spec", type: :system do
+  let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
+  let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
+
   describe "GET /show" do
-    let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-    let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
     let(:product) { create(:product, name: "商品カテゴリ", taxons: [taxon]) }
     let(:image) { create(:image) }
     let!(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
@@ -30,12 +31,6 @@ RSpec.describe "Categoriesのsystem spec", type: :system do
       expect(page).to have_content(product.display_price.to_s)
     end
 
-    it "パンくずリストにホームリンクが表示されること" do
-      within('.breadcrumb') do
-        expect(page).to have_link 'ホーム', href: root_path
-      end
-    end
-
     it "パンくずリストにホームへのリンクが機能すること" do
       within('.breadcrumb') do
         click_on 'ホーム'
@@ -45,14 +40,11 @@ RSpec.describe "Categoriesのsystem spec", type: :system do
   end
 
   describe "パンくずリストのテスト" do
+    before do
+      visit category_path(taxon.id)
+    end
+
     context "テストカテゴリーに親カテゴリがある場合" do
-      let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
-      let(:taxon) { create(:taxon, name: "カテゴリ", parent: parent_taxon) }
-
-      before do
-        visit category_path(taxon.id)
-      end
-
       it "テストカテゴリーのリンクが表示されること" do
         within('.breadcrumb') do
           expect(page).to have_link taxon.name, href: category_path(taxon.id)

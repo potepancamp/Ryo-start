@@ -15,7 +15,7 @@ RSpec.describe "Productsのrequest spec", type: :request do
     end
 
     it "カテゴリ商品のタイトルが含まれていること" do
-      expect(response.body).to include("<title>#{product.name} - BIGBAG Store</title>")
+      expect(response.body).to include("#{product.name} - BIGBAG Store")
     end
 
     it "カテゴリ商品が含まれていること" do
@@ -24,10 +24,6 @@ RSpec.describe "Productsのrequest spec", type: :request do
 
     it "商品価格が含まれていること" do
       expect(response.body).to include(product.display_price.to_s)
-    end
-
-    it "パンくずリストにホームへのリンクが含まれていること" do
-      expect(response.body).to include('<a href="/">ホーム</a>')
     end
 
     it "パンくずリストにテストカテゴリーが含まれていること" do

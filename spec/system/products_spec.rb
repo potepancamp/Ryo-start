@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Productsのsystem spec", type: :system do
   describe "GET /show" do
-    let(:root_taxon) { create(:taxon, name: 'ルートカテゴリー') }
+    let(:root_taxon) { create(:taxon, name: '最上位カテゴリー') }
     let(:parent_taxon) { create(:taxon, parent: root_taxon, name: '親カテゴリー') }
     let(:taxon) { create(:taxon, parent: parent_taxon, name: 'テストカテゴリー') }
     let(:product) { create(:product, taxons: [taxon], name: '商品カテゴリ') }
@@ -23,12 +23,6 @@ RSpec.describe "Productsのsystem spec", type: :system do
 
     it "商品価格が表示されること" do
       expect(page).to have_content(product.display_price.to_s)
-    end
-
-    it "パンくずリストにホームリンクが表示されること" do
-      within(all('.breadcrumb').first) do
-        expect(page).to have_link('ホーム', href: root_path)
-      end
     end
 
     it "パンくずリストにホームへのリンクが機能すること" do
@@ -60,7 +54,7 @@ RSpec.describe "Productsのsystem spec", type: :system do
       end
     end
 
-    it "パンくずリストにルートカテゴリーが表示されないこと" do
+    it "パンくずリストに最上位カテゴリーが表示されないこと" do
       within(all('.breadcrumb').first) do
         expect(page).not_to have_content(root_taxon.name)
       end

@@ -28,10 +28,6 @@ RSpec.describe "Categoriesのrequest spec", type: :request do
       expect(response.body).to include(product.display_price.to_s)
     end
 
-    it "パンくずリストにホームへのリンクが含まれていること" do
-      expect(response.body).to include('<a href="/">ホーム</a>')
-    end
-
     it "パンくずリストにテストカテゴリー名が含まれていること" do
       expect(response.body).to include(taxon.name)
     end
