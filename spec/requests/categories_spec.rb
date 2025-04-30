@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe "Categoriesのrequest spec", type: :request do
+RSpec.describe "Categories", type: :request do
   describe " GET /Categories/:id" do
     let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
     let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-    let(:image) { create(:image) }
 
     before do
-      product.images << image
+      product.images << create(:image)
       get category_path(taxon.id)
     end
 

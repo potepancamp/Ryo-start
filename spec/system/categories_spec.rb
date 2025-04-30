@@ -1,17 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe "Categoriesのsystem spec", type: :system do
+RSpec.describe "Categories", type: :system do
   let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
   let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
 
   describe "GET /show" do
     let(:product) { create(:product, name: "商品カテゴリ", taxons: [taxon]) }
-    let(:image) { create(:image) }
     let(:unrelated_taxon) { create(:taxon, name: "別カテゴリ") }
     let!(:unrelated_product) { create(:product, name: "表示されてはいけない商品", taxons: [unrelated_taxon]) }
 
     before do
-      product.images << image
+      product.images << create(:image)
       visit category_path(taxon.id)
     end
 

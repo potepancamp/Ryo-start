@@ -139,6 +139,10 @@
   width: 100%;
 }
 
+.RelatedProducts {
+  display: block;
+}
+
 .RelatedProducts__title {
   color: #333;
   font-size: 21px;
@@ -152,16 +156,17 @@
   justify-content: space-between;
 }
 
-.RelatedProduct {
+.related-product {
   width: calc(100% / 4 - 24px);
 }
 
-.RelatedProduct__image {
+.related-product-image {
+  border: 1px solid #dfe2e6;
   margin-bottom: 8px;
   width: 100%;
 }
 
-.RelatedProduct__name {
+.related-name {
   color: #1E1E20;
   font-size: 16px;
   font-weight: 700;
@@ -169,9 +174,17 @@
   margin-bottom: 4px;
 }
 
-.RelatedProduct__price {
+.related-price {
   color: #1E1E20;
   font-size: 18px;
   font-weight: 700;
   line-height: 26px;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.no-underline:hover {
+  text-decoration: none;
 }
