@@ -1,5 +1,11 @@
 <% provide(:title, @product.name) %>
 <div class="Container ProductsContainer">
+  <ol class="breadcrumb">
+    <%= render 'shared/breadcrumb', ancestors: @ancestors %>
+    <li class="breadcrumb-item active" aria-current="page">
+      <span style="color: black;">/ <%= @product.name %></span>
+    </li>
+  </ol>
   <div class="ProductWrapper">
     <div class="ProductSlider">
       <div class="carousel-inner">
@@ -30,22 +36,13 @@
           <label for="radio4" class="SizeButton__label">XL</label>
         </div>
       </div>
-      <h3 class="ProductDetail__price">
-        <%= @product.display_price %>  
-      </h3>
+      <h3 class="ProductDetail__price"><%= @product.display_price %></h3>
       <label class="SubTotalForItem__label" for="item-count">数量</label>
       <div class="SubTotalForItem__select ProductDetail__item-count">
         <select name="item-count" id="item-count">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+          <% (1..10).each do |quantity| %>
+            <option><%= quantity %></option>
+          <% end %>
         </select>
       </div>
       <a class="ProductDetail__add-button" href="/cart">カートに入れる</a>
@@ -54,26 +51,13 @@
   <section class="RelatedProducts">
     <h3 class="RelatedProducts__title">一緒に見られている商品</h3>
     <ul class="RelatedProducts__list">
-      <li class="RelatedProduct">
-        <%= image_tag "home/category/cloth.jpg", class: "RelatedProduct__image", alt: "服" %>
-        <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
-        <span class="RelatedProduct__price">¥ 5,999</span>
-      </li>
-      <li class="RelatedProduct">
-        <%= image_tag "home/category/cloth.jpg", class: "RelatedProduct__image", alt: "服" %>
-        <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
-        <span class="RelatedProduct__price">¥ 5,999</span>
-      </li>
-      <li class="RelatedProduct">
-        <%= image_tag "home/category/cloth.jpg", class: "RelatedProduct__image", alt: "服" %>
-        <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
-        <span class="RelatedProduct__price">¥ 5,999</span>
-      </li>
-      <li class="RelatedProduct">
-        <%= image_tag "home/category/cloth.jpg", class: "RelatedProduct__image", alt: "服" %>
-        <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
-        <span class="RelatedProduct__price">¥ 5,999</span>
-      </li>
+      <% 4.times do %>
+        <li class="RelatedProduct">
+          <%= image_tag "home/category/cloth.jpg", class: "RelatedProduct__image", alt: "服" %>
+          <p class="RelatedProduct__name">ヒートテックウォームウォームパデットリブブルゾン</p>
+          <span class="RelatedProduct__price">¥ 5,999</span>
+        </li>
+      <% end %>
     </ul>
   </section>
 </div>

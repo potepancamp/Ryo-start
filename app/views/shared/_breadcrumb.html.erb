@@ -1,0 +1,11 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to 'ホーム', root_path %>
+  </li>
+
+  <% ancestors.each do |ancestor| %>
+    <li class="breadcrumb-item">
+      <%= link_to ancestor.name, category_path(ancestor.id) %>
+    </li>
+  <% end %>
+</ol>

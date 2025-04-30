@@ -1,21 +1,23 @@
-RSpec.describe "Productsのrequest spec", type: :request do
-  describe "GET /products/:id" do
-    let(:image) { create(:image) }
-    let(:ancestor) { create(:taxon, name: "親カテゴリー") }
-    let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
+require 'rails_helper'
+
+RSpec.describe "Categoriesのrequest spec", type: :request do
+  describe " GET /Categories/:id" do
+    let(:parent_taxon) { create(:taxon, name: "親カテゴリ") }
+    let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: parent_taxon) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
+    let(:image) { create(:image) }
 
     before do
       product.images << image
-      get product_path(product.id)
+      get category_path(taxon.id)
     end
 
     it "200 OKであること" do
       expect(response).to have_http_status(200)
     end
 
-    it "カテゴリ商品のタイトルが含まれていること" do
-      expect(response.body).to include("#{product.name} - BIGBAG Store")
+    it "カテゴリーページタイトルが含まれていること" do
+      expect(response.body).to include("#{taxon.name} - BIGBAG Store")
     end
 
     it "カテゴリ商品が含まれていること" do
@@ -26,16 +28,12 @@ RSpec.describe "Productsのrequest spec", type: :request do
       expect(response.body).to include(product.display_price.to_s)
     end
 
-    it "パンくずリストにテストカテゴリーが含まれていること" do
+    it "パンくずリストにテストカテゴリー名が含まれていること" do
       expect(response.body).to include(taxon.name)
     end
 
     it "パンくずリストにテストカテゴリーへのリンクが含まれていること" do
       expect(response.body).to include(category_path(taxon.id))
-    end
-
-    it "パンくずリストに商品名が含まれていること" do
-      expect(response.body).to include(product.name)
     end
   end
 end

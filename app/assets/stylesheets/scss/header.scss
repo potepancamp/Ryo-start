@@ -202,3 +202,12 @@
     }
   }
 }
+
+.NavigationMenuList__item a {
+  text-decoration: none;
+}
+
+.NavigationMenuList__item a:hover {
+  text-decoration: underline;
+  color:black;
+}

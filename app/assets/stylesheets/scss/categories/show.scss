@@ -1,0 +1,50 @@
+/* application.css の適切な場所に追加 */
+.categoris_container {
+  margin: 0 auto 128px;
+  max-width: 1194px;
+}
+
+.categoris_name {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 24px 0 96px;    
+}
+
+@media screen and (min-width: 1152px) and (max-width: 1440px) {
+  .categoris_container {
+    width: calc(100% - 116px* 2);
+  }
+}
+
+.categories_products {
+  column-gap: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 96px;
+}
+  
+.categoris_product {
+  width: calc(100% / 4 - 24px);
+}
+  
+.categories_product_images {
+  border: 1px solid #dfe2e6;
+  margin-bottom: 8px;
+  width: 100%;
+}
+  
+.categoris_product_name {
+  color: #1E1E20;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  margin-bottom: 4px;
+}
+
+
+.categoris_product_price {
+  color: #1E1E20;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}

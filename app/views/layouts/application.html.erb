@@ -5,7 +5,7 @@
     <%= render 'layouts/head' %>
   </head> 
   <body>
-    <%= render 'layouts/header' %>
+    <%= render 'layouts/header', categories: @categories %>
     <%= yield %>
     <%= render 'layouts/footer' %>
     <%= javascript_include_tag 'application' %>

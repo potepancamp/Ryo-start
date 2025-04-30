@@ -59,6 +59,13 @@ group :development, :test do
   gem 'rubocop-airbnb'
 end
 
+# テスト環境専用
+group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
+end
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 4.1.0'
@@ -75,3 +82,5 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'base64'
 gem 'bigdecimal'
 gem 'mutex_m'
+
+gem 'breadcrumbs_on_rails'

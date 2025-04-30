@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'spree/testing_support/factories'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -25,6 +26,38 @@ require 'spree/testing_support/factories'
 # require only the support files necessary.
 #
 # Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+
+# Capybara + Selenium（Chromeヘッドレス）設定
+Capybara.register_driver :chrome_headless do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :chrome_headless
+
+# System spec の driver 切り替え設定
+RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    if ENV["SELENIUM_DRIVER_URL"].present?
+      driven_by :selenium, using: :chrome, options: {
+        browser: :remote,
+        url: ENV.fetch("SELENIUM_DRIVER_URL"),
+        desired_capabilities: :chrome,
+      }
+    else
+      driven_by :selenium_chrome_headless
+    end
+  end
+end
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.

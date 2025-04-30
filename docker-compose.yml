@@ -6,9 +6,11 @@ volumes:
   public_spree:
   storage:
 
+
 services:
   mysql:
     image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: password
     networks:
@@ -17,7 +19,6 @@ services:
       - '33306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
   potepanec:
     build:
       context: .
@@ -28,8 +29,10 @@ services:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: password
       MYSQL_HOST: mysql
+      SELENIUM_DRIVER_URL: "http://selenium_chrome:4444/wd/hub"
     depends_on:
       - mysql
+      - chrome
     networks:
       - default
     volumes:
@@ -44,3 +47,7 @@ services:
     tty: true
     stdin_open: true
     command: bundle exec rails server -b 0.0.0.0
+  chrome:
+    image: seleniarm/standalone-chromium
+    ports:
+      - 4444:4444
