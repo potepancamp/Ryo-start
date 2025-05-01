@@ -1,12 +1,18 @@
-module Potepan::ProductDecorator
-  def related_products
-    Spree::Product.
-      in_taxons(taxons).
-      where.not(id: id).
-      order(id: "DESC").
-      distinct
+module Potepan
+  module ProductDecorator
+    RELATED_PRODUCTS_MAXIMUM_COUNT = 4
+
+    def related_products
+      taxons = self.taxons
+      related = Spree::Product.
+        joins(:taxons).
+        where(taxons: { id: taxons.pluck(:id) }).
+        where.not(id: id).
+        distinct
+
+      related.limit(RELATED_PRODUCTS_MAXIMUM_COUNT)
+    end
   end
-
-
-  Spree::Product.prepend self
 end
+
+Spree::Product.include Potepan::ProductDecorator

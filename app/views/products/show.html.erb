@@ -51,7 +51,7 @@
   <section class="RelatedProducts">
     <h3 class="RelatedProducts__title">一緒に見られている商品</h3>
     <ul class="RelatedProducts__list">
-      <% @related_products.each do |product| %>
+      <% @related_products.first(4).each do |product| %>
         <li class="related-product">
           <%= link_to product_path(product.id), class: 'no-underline' do %>
             <%= image_tag product.images.first.attachment(:small), alt: product.name, class: 'related-product-image' %>
