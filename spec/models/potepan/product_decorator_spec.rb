@@ -31,5 +31,10 @@ RSpec.describe Potepan::ProductDecorator, type: :model do
       ids = product.related_products.map(&:id)
       expect(ids.uniq.size).to eq(ids.size)
     end
+
+    it "関連商品がデフォルトの並び順で返されること" do
+      related_product_ids = product.related_products.map(&:id)
+      expect(related_product_ids).to eq(related_product_ids.sort)
+    end
   end
 end
