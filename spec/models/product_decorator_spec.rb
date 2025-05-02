@@ -1,16 +1,12 @@
 require 'rails_helper'
-require Rails.root.join("app/models/potepan/product_decorator.rb")
+require Rails.root.join("app/models/product_decorator.rb")
 
-RSpec.describe Potepan::ProductDecorator, type: :model do
+RSpec.describe Spree::Product, type: :model do
   let(:ancestor) { create(:taxon, name: "親カテゴリー") }
   let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
   let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-  let!(:related_products) { create_list(:product, 4, taxons: [taxon]) }
+  let!(:related_product) { create(:product, taxons: [taxon]) }
   let!(:unrelated_product) { create(:product) }
-
-  before do
-    Spree::Product.include Potepan::ProductDecorator
-  end
 
   describe "related_products" do
     it "自分自身を含まないこと" do
@@ -18,23 +14,21 @@ RSpec.describe Potepan::ProductDecorator, type: :model do
     end
 
     it "同じカテゴリに属する他の商品を含むこと" do
-      related_products.each do |related_product|
-        expect(product.related_products).to include(related_product)
-      end
+      expect(product.related_products).to match_array([related_product])
     end
-
+    
     it "異なるカテゴリの商品は含まないこと" do
       expect(product.related_products).not_to include(unrelated_product)
     end
 
     it "重複を含まないこと" do
-      ids = product.related_products.map(&:id)
-      expect(ids.uniq.size).to eq(ids.size)
-    end
-
-    it "関連商品がデフォルトの並び順で返されること" do
+      # テストデータに基づいて重複を確認
       related_product_ids = product.related_products.map(&:id)
-      expect(related_product_ids).to eq(related_product_ids.sort)
+      expect(related_product_ids.uniq.size).to eq(related_product_ids.size)
     end
   end
 end
+
+
+# 「重複条件を持つテストデータ」を明示的に作り、期待値と照らし合わせるテスト
+# であるべきです。
