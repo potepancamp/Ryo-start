@@ -5,19 +5,37 @@ RSpec.describe Spree::Product, type: :model do
   let(:ancestor) { create(:taxon, name: "親カテゴリー") }
   let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
   let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-  let!(:related_product) { create(:product, taxons: [taxon]) }
-  let!(:unrelated_product) { create(:product) }
+  let(:related_product) { create(:product, taxons: [taxon]) }
+  let(:unrelated_product) { create(:product) }
 
-  describe "related_products" do
+  describe "#related_products" do
+    subject { product.related_products }
+
     it "自分自身を含まないこと" do
-      expect(product.related_products).not_to include(product)
+      is_expected.not_to include(product)
     end
+
     it "同じカテゴリに属する他の商品を含むこと" do
-      expect(product.related_products).to match_array([related_product])
+      is_expected.to include(related_product)
     end
 
     it "異なるカテゴリの商品は含まないこと" do
-      expect(product.related_products).not_to include(unrelated_product)
+      is_expected.not_to include(unrelated_product)
+    end
+
+    context '別の商品が同じカテゴリに属する' do
+      let(:other_taxon) { create(:taxon, name: "別カテゴリ") }
+      let!(:other_product) { create(:product, name: "別カテゴリ商品", taxons: [taxon, other_taxon]) }
+
+      before do
+        related_product.taxons << other_taxon
+        related_product.save!
+      end
+
+      it "重複を含まないこと" do
+        product_ids = subject.ids
+        expect(product_ids).to eq product_ids.uniq
+      end
     end
   end
 end
