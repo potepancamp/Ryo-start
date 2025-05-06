@@ -4,7 +4,7 @@ require Rails.root.join("app/models/product_decorator.rb")
 RSpec.describe Spree::Product, type: :model do
   let(:ancestor) { create(:taxon, name: "親カテゴリー") }
   let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
-  let!(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
+  let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
   let!(:related_product) { create(:product, taxons: [taxon]) }
   let!(:unrelated_product) { create(:product) }
 

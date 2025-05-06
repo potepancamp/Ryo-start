@@ -1,9 +1,11 @@
+require 'rails_helper'
+
 RSpec.describe "Products", type: :request do
   describe "GET /products/:id" do
     let(:ancestor) { create(:taxon, name: "親カテゴリー") }
     let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
     let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-    let!(:related_products) { create_list(:product, 5, taxons: [taxon]) }
+    let(:related_products) { create_list(:product, 5, taxons: [taxon]) }
 
     # 画像を関連商品に紐づける
     before do
@@ -42,24 +44,14 @@ RSpec.describe "Products", type: :request do
       expect(response.body).to include(product.name)
     end
 
-    it "関連商品の名前が最大4件含まれていること" do
-      related_products.first(4).each do |related_product|
+    it "関連商品の名前、価格、画像が最大4件含まれていること" do
+      related_products.first(4).all? do |related_product|
         expect(response.body).to include(related_product.name)
+        expect(response.body).to include(related_product.display_price.to_s)
+        expect(related_product.images).to be_present
       end
 
       expect(response.body).not_to include(related_products[4].name)
-    end
-
-    it "関連商品の価格が含まれていること" do
-      related_products.each do |related_product|
-        expect(response.body).to include(related_product.display_price.to_s)
-      end
-    end
-
-    it "関連商品の画像が含まれていること" do
-      related_products.each do |related_product|
-        expect(related_product.images).to be_present
-      end
     end
   end
 end
