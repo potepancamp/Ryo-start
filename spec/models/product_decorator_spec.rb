@@ -4,9 +4,9 @@ require Rails.root.join("app/models/product_decorator.rb")
 RSpec.describe Spree::Product, type: :model do
   let(:ancestor) { create(:taxon, name: "親カテゴリー") }
   let(:taxon) { create(:taxon, name: "テストカテゴリー", parent: ancestor) }
-  let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
-  let(:related_product) { create(:product, taxons: [taxon]) }
-  let(:unrelated_product) { create(:product) }
+  let!(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon]) }
+  let!(:related_product) { create(:product, taxons: [taxon]) }
+  let!(:unrelated_product) { create(:product) }
 
   describe "#related_products" do
     subject { product.related_products }
@@ -33,8 +33,7 @@ RSpec.describe Spree::Product, type: :model do
       end
 
       it "重複を含まないこと" do
-        product_ids = subject.ids
-        expect(product_ids).to eq product_ids.uniq
+        expect(subject.ids).to eq [related_product.id, other_product.id]
       end
     end
   end

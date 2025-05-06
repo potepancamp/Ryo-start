@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe "Products", type: :system do
   describe "GET /show" do
     let(:root_taxon) { create(:taxon, name: '最上位カテゴリー') }
@@ -61,24 +63,14 @@ RSpec.describe "Products", type: :system do
       end
     end
 
-    it "関連商品の名前が最大4件表示されること" do
+    it "関連商品の名前、価格、画像が最大4件表示されること" do
       related_products.first(4).each do |related_product|
         expect(page).to have_content(related_product.name)
+        expect(page).to have_content(related_product.display_price.to_s)
+        expect(page).to have_content(related_product.images.first.alt)
       end
 
       expect(page).not_to have_content(related_products[4].name)
-    end
-
-    it "関連商品の価格が最大4件表示されること" do
-      related_products.first(4).each do |related_product|
-        expect(page).to have_content(related_product.display_price.to_s)
-      end
-    end
-
-    it "関連商品の画像が表示されること" do
-      related_products.first(4).each do |related_product|
-        expect(page).to have_content(related_product.images.first.alt)
-      end
     end
   end
 end
