@@ -48,9 +48,11 @@ RSpec.describe "Products", type: :request do
       related_products.first(4).all? do |related_product|
         expect(response.body).to include(related_product.name)
         expect(response.body).to include(related_product.display_price.to_s)
-        expect(related_product.images).to be_present
+        expect(response.body).to include("<img alt=\"#{related_product.name}\"")
       end
+    end
 
+    it "関連商品の5件目が含まれないこと" do
       expect(response.body).not_to include(related_products[4].name)
     end
   end

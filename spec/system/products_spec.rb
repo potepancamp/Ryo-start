@@ -64,12 +64,14 @@ RSpec.describe "Products", type: :system do
     end
 
     it "関連商品の名前、価格、画像が最大4件表示されること" do
-      related_products.first(4).each do |related_product|
+      related_products.first(4).all? do |related_product|
         expect(page).to have_content(related_product.name)
         expect(page).to have_content(related_product.display_price.to_s)
-        expect(page).to have_content(related_product.images.first.alt)
+        expect(page).to have_css("img[alt='#{related_product.name}']")
       end
+    end
 
+    it "関連商品の5件目が含まれないこと" do
       expect(page).not_to have_content(related_products[4].name)
     end
   end

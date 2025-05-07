@@ -28,8 +28,8 @@ RSpec.describe Spree::Product, type: :model do
       let!(:other_product) { create(:product, name: "別カテゴリ商品", taxons: [taxon, other_taxon]) }
 
       before do
-        related_product.taxons << other_taxon
-        related_product.save!
+        product.taxons << other_taxon
+        product.save!
       end
 
       it "重複を含まないこと" do

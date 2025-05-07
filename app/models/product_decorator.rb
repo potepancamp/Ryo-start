@@ -3,7 +3,8 @@ module ProductDecorator
     Spree::Product.
       in_taxons(*taxons).
       where.not(id: id).
-      order(:id)
+      order(:id).
+      distinct
   end
 end
 
