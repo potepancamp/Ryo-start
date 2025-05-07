@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join("app/models/product_decorator.rb")
 
 RSpec.describe Spree::Product, type: :model do
   let(:ancestor) { create(:taxon, name: "親カテゴリー") }
@@ -23,7 +22,7 @@ RSpec.describe Spree::Product, type: :model do
       is_expected.not_to include(unrelated_product)
     end
 
-    context '別の商品が同じカテゴリに属する' do
+    context 'テスト対象の商品が別の商品と共通する２つのカテゴリに属する' do
       let(:other_taxon) { create(:taxon, name: "別カテゴリ") }
       let!(:other_product) { create(:product, name: "別カテゴリ商品", taxons: [taxon, other_taxon]) }
 
