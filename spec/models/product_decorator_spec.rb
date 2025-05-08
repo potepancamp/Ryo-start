@@ -23,13 +23,9 @@ RSpec.describe Spree::Product, type: :model do
     end
 
     context 'テスト対象の商品が別の商品と共通する２つのカテゴリに属する' do
+      let(:product) { create(:product, name: "カテゴリ商品", taxons: [taxon, other_taxon]) }
       let(:other_taxon) { create(:taxon, name: "別カテゴリ") }
       let!(:other_product) { create(:product, name: "別カテゴリ商品", taxons: [taxon, other_taxon]) }
-
-      before do
-        product.taxons << other_taxon
-        product.save!
-      end
 
       it "重複を含まないこと" do
         expect(subject.ids).to eq [related_product.id, other_product.id]
