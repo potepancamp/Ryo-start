@@ -137,6 +137,11 @@
   line-height: 60px;
   text-align: center;
   width: 100%;
+  text-decoration: none;
+  &:hover {
+    color: red;
+    text-decoration: none;
+  }
 }
 
 .RelatedProducts {

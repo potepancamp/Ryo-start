@@ -55,7 +55,6 @@
         <li class="related-product">
           <%= link_to product_path(product.id), class: 'no-underline' do %>
             <%= image_tag product.images.first.attachment(:small), alt: product.name, class: 'related-product-image' %>
-            <br>
             <p class="related-name"><%= product.name %></p>
             <p class="related-price"><%= product.display_price %></p>
           <% end %>
