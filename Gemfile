@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rails-erd'
   gem 'annotate'
   gem 'rubocop-airbnb'
+  gem 'bullet'
 end
 
 # テスト環境専用

@@ -1,15 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "Productsのsystem spec", type: :system do
+RSpec.describe "Products", type: :system do
   describe "GET /show" do
     let(:root_taxon) { create(:taxon, name: '最上位カテゴリー') }
     let(:parent_taxon) { create(:taxon, parent: root_taxon, name: '親カテゴリー') }
     let(:taxon) { create(:taxon, parent: parent_taxon, name: 'テストカテゴリー') }
     let(:product) { create(:product, taxons: [taxon], name: '商品カテゴリ') }
-    let(:image) { create(:image) }
+    let!(:related_products) { create_list(:product, 5, taxons: [taxon]) }
 
     before do
-      product.images << image
+      product.images << create(:image)
+      related_products.each do |related_product|
+        related_product.images << create(:image)
+      end
       visit product_path(product.id)
     end
 
@@ -58,6 +61,18 @@ RSpec.describe "Productsのsystem spec", type: :system do
       within(all('.breadcrumb').first) do
         expect(page).not_to have_content(root_taxon.name)
       end
+    end
+
+    it "関連商品の名前、価格、画像が最大4件表示されること" do
+      related_products.first(4).all? do |related_product|
+        expect(page).to have_content(related_product.name)
+        expect(page).to have_content(related_product.display_price.to_s)
+        expect(page).to have_css("img[alt='#{related_product.name}']")
+      end
+    end
+
+    it "関連商品の5件目が含まれないこと" do
+      expect(page).not_to have_content(related_products[4].name)
     end
   end
 end

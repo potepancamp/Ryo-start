@@ -9,7 +9,7 @@
           <div class="CategoryItem__image-wrapper">
             <%= image_tag(image_path, alt: category.name) %>
             <div class="CategoryItem__masking">
-              <%= link_to "VIEW", category_path(category), class: "CategoryItem__button" %>
+              <%= link_to "VIEW", category_path(category.id), class: "CategoryItem__button" %>
             </div>
           </div>
           <h3 class="CategoryItem__name"><%= category.name %></h3>

@@ -65,4 +65,11 @@ Rails.application.configure do
   # add white list ips under Docker
   # config.web_console.whitelisted_ips = '0.0.0.0/0'
   config.web_console.allowed_ips = '0.0.0.0/0'
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
 end
